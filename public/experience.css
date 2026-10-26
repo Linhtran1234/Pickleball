@@ -203,3 +203,9 @@ button{position:relative;overflow:hidden;}
 @media(max-width:1000px){.board-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}}
 @media(max-width:600px){.board-grid{grid-template-columns:minmax(0,1fr);gap:16px;}.board-col-head{padding:15px;}.board-col .board-slot{min-height:70px;}.brand-text h1{max-width:none;}}
 @media print{.board-logo-edit{display:none;}.board-grid{grid-template-columns:repeat(3,minmax(0,1fr));}.board-col{break-inside:avoid;}}
+
+/* A blue brush plate keeps the white edition legible over the bright court. */
+.event-year-digits{position:relative;display:inline-block;isolation:isolate;padding:5px 24px 9px 17px;color:#fff;line-height:1;text-shadow:1px 2px 0 #002c5c70;filter:drop-shadow(0 5px 6px #073b701a);}
+.event-year-digits::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,#0768b3,#073b70);clip-path:polygon(4% 5%,100% 0,96% 25%,99% 32%,94% 91%,0 100%,3% 70%,0 67%);}
+.event-year-line{background:linear-gradient(90deg,#075ba6 0 62%,#ffe329 62%);}
+@media(max-width:600px){.event-year{gap:16px;}.event-year-digits{padding:5px 18px 8px 12px;}.event-year-line{width:70px;}}

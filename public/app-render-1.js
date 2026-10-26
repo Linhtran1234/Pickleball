@@ -34,7 +34,7 @@ RENDERERS.overview = function(){
     <div class="event-stage">
       <div class="event-copy">
         <p class="event-eyebrow"><span></span> CHÀO MỪNG BẠN ĐẾN VỚI GIẢI ĐẤU</p>
-        <h1 class="event-title"><span class="event-brand">BMT MATERIALS</span><span class="event-sport">PICKLEBALL</span><span class="event-year">2026<span class="event-year-line"></span></span></h1>
+        <h1 class="event-title"><span class="event-brand">BMT MATERIALS</span><span class="event-sport">PICKLEBALL</span><span class="event-year"><span class="event-year-digits">2026</span><span class="event-year-line"></span></span></h1>
         <p class="event-tagline">Cùng ra sân. Cùng tỏa sáng.</p>
         <p class="event-description">Một sân chơi, chung tinh thần đồng đội.<br>Dự kiến 30 cặp đấu · 6 bảng · 5 cấp độ · 7 sân thi đấu</p>
         <div class="event-cta">

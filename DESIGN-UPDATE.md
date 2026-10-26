@@ -63,3 +63,7 @@ Tiêu đề header/footer/login giữ cụm CÔNG TY trên cùng dòng. Chia b�
 Admin vào Chia bảng → Đổi logo tại bảng A–F, dán URL ảnh công khai HTTP(S) hoặc đường dẫn assets/, xem trước rồi Lưu logo. Để trống để trở về mặc định. Logo dùng chung cho bảng và các đội thuộc bảng, kể cả LIVE tự động; LIVE nhập tay vẫn có logo riêng. Logo được lưu trong SQLite và JSON export/import; Excel hiện không chèn ảnh. Người xem không có quyền lưu. Khởi động lại Node sau khi cập nhật để nạp phần lưu metadata mới; không cần reset dữ liệu.
 
 Kiểm tra: 28 test đạt, gồm lưu/đọc lại logo qua API, từ chối người xem và URL không hợp lệ; Chromium kiểm tra 40 tổ hợp tab/màn hình và bốn chiều rộng với dữ liệu giả lập chỉ trong trình duyệt.
+
+## Tăng tương phản năm 2026
+
+Đặt chữ 2026 trắng trên một dải cọ xanh đậm riêng, cùng phong cách mảng PICKLEBALL. Dải có bóng nhẹ, giữ độ rõ trên nền trời sáng và không làm nền che sang các nội dung bên cạnh. Điều chỉnh khoảng cách và dải trang trí cho màn hình nhỏ.
