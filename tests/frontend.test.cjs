@@ -95,3 +95,14 @@ test('LIVE sidebar keeps official history across court changes and preserves the
   assert.deepEqual(app.errors,[]);
  }finally{app.close();}
 });
+
+test('Group logo controls are admin-only and apply to board and automatic LIVE',async()=>{
+ const state=fixture();state.tournamentStatus='started';const app=await boot({state,admin:true});const {w}=app;
+ try{
+ w.switchTab('board');assert.equal(w.document.querySelectorAll('.board-logo-edit').length,6);
+ w.openGroupLogoModal('A');w.document.getElementById('groupLogoUrl').value='https://example.com/team.png';w.saveGroupLogo('A');assert.equal(w.groupLogo('A'),'https://example.com/team.png');
+ assert.equal(w.document.querySelector('.board-col img').src,'https://example.com/team.png');
+ w.eval("CURRENT_USER={role:'user'}");w.render();assert.equal(w.document.querySelectorAll('.board-logo-edit').length,0);w.openGroupLogoModal('B');assert.equal(w.document.querySelector('#groupLogoUrl'),null);
+ assert.deepEqual(app.errors,[]);
+ }finally{app.close();}
+});

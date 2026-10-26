@@ -154,6 +154,7 @@ function getFullState() {
     teams,
     waiting,
     matches,
+    groupLogos: (()=>{try{return JSON.parse(meta.groupLogos||'{}');}catch{return {};}})(),
     liveCourts, // 7 cấu hình nhập tay; liveScores là luồng tự động độc lập
     tournamentStatus: meta.tournamentStatus || 'setup',
     updatedAt: Number(meta.updatedAt || Date.now()),
@@ -209,6 +210,7 @@ const saveTx = db.transaction((state) => {
 
   upsMeta.run({ key: 'eventName', value: (state.eventName || Tournament.EVENT_NAME).replace(/^BMT MATERIAL PICKLEBALL/, 'BMT MATERIALS PICKLEBALL') });
   upsMeta.run({ key: 'tournamentStatus', value: state.tournamentStatus || 'setup' });
+  upsMeta.run({key:'groupLogos',value:JSON.stringify(state.groupLogos||{})});
   upsMeta.run({key:'liveCourts',value:JSON.stringify(state.liveCourts || Tournament.emptyState().liveCourts)});
   upsMeta.run({ key: 'updatedAt', value: String(now) });
 });

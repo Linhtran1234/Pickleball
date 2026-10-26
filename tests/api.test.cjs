@@ -86,3 +86,13 @@ test('Local admin recovery repairs access without changing event records or othe
  execFileSync(process.execPath,[path.join(root,'recover-admin.js')],{env:{...process.env,BMT_ADMIN_USERNAME:'recovered_admin',BMT_ADMIN_PASSWORD:'another-test-pass'}});
  assert.equal(store.listUsers().length,count);assert.equal((await login('recovered_admin','another-test-pass')).user.role,'admin');
 });
+
+test('Admin group logos persist and synchronize while unsafe URLs and viewer writes are rejected',async()=>{
+ let state=(await request('/api/state')).data;
+ state.groupLogos={A:'https://example.com/logo.png'};
+ let saved=await request('/api/state','PUT',{...state,baseUpdatedAt:state.updatedAt});assert.equal(saved.status,200);
+ state=(await request('/api/state')).data;assert.equal(state.groupLogos.A,'https://example.com/logo.png');
+ const viewer=await login('user','user123');assert.equal((await request('/api/state','PUT',{...state,baseUpdatedAt:state.updatedAt},viewer.token)).status,403);
+ state.groupLogos.A='javascript:alert(1)';assert.equal((await request('/api/state','PUT',{...state,baseUpdatedAt:state.updatedAt})).status,400);
+ assert.equal((await request('/api/state')).data.groupLogos.A,'https://example.com/logo.png');
+});

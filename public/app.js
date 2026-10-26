@@ -14,10 +14,10 @@ const GROUP_INFO = Object.fromEntries(GROUPS.map(g => [g, {
 }]));
 function groupName(g){ return g && GROUP_INFO[g] ? GROUP_INFO[g].name : (g||''); }
 function groupFullName(g){ return groupName(g); }
-function groupLogo(g){ return g && GROUP_INFO[g] ? GROUP_INFO[g].logo : ''; }
+function groupLogo(g){ return g && GROUP_INFO[g] ? (STATE?.groupLogos?.[g] || GROUP_INFO[g].logo) : ''; }
 function groupLogoImg(g, size=44){
   if(!g || !GROUP_INFO[g]) return `<span class="grp-badge">${escapeHtml(g||'?')}</span>`;
-  return `<img src="${groupLogo(g)}" alt="${escapeHtml(groupName(g))}" title="${escapeHtml(groupFullName(g))}" class="grp-logo" style="width:${size}px;height:${size}px;">`;
+  return `<img src="${escapeHtml(groupLogo(g))}" alt="${escapeHtml(groupName(g))}" title="${escapeHtml(groupFullName(g))}" class="grp-logo" style="width:${size}px;height:${size}px;">`;
 }
 function groupChip(g, size=48){
   if(!g || !GROUP_INFO[g]) return g ? `<span class="grp-badge">${escapeHtml(g)}</span>` : '';

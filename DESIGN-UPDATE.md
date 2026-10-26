@@ -55,3 +55,11 @@ Banner khôi phục chữ BMT xanh đậm, PICKLEBALL vàng trên mảng cọ xa
 Cụm kỷ niệm dùng vector riêng `public/assets/anniversary-15.svg`: số 15 nghiêng, vàng kim có viền nổi và chiều sâu, NĂM màu xanh trong lòng số 5, lụa vàng cong có nếp gấp và phần lụa xanh phía sau theo mẫu poster. Giữ nền trong suốt và vị trí cao để không che mặt VĐV nam. Hiệu ứng gồm ánh sáng lướt qua mặt số, điểm sáng và chuyển động nổi nhẹ; hỗ trợ prefers-reduced-motion. Vector giữ chữ rõ ở desktop/mobile.
 
 Kiểm tra: 26 test đạt; Chromium xác nhận 40 tổ hợp tab/kích thước, banner tràn viền và giảm chuyển động. Đã xem ảnh desktop/mobile sau cập nhật.
+
+## Chia bảng dạng thẻ và logo do Admin quản lý
+
+Tiêu đề header/footer/login giữ cụm CÔNG TY trên cùng dòng. Chia bảng dùng sáu thẻ riêng: ba cột desktop, hai cột tablet và một cột điện thoại; mỗi thẻ có logo, tiến độ và năm ô đội hỗ trợ bàn phím.
+
+Admin vào Chia bảng → Đổi logo tại bảng A–F, dán URL ảnh công khai HTTP(S) hoặc đường dẫn assets/, xem trước rồi Lưu logo. Để trống để trở về mặc định. Logo dùng chung cho bảng và các đội thuộc bảng, kể cả LIVE tự động; LIVE nhập tay vẫn có logo riêng. Logo được lưu trong SQLite và JSON export/import; Excel hiện không chèn ảnh. Người xem không có quyền lưu. Khởi động lại Node sau khi cập nhật để nạp phần lưu metadata mới; không cần reset dữ liệu.
+
+Kiểm tra: 28 test đạt, gồm lưu/đọc lại logo qua API, từ chối người xem và URL không hợp lệ; Chromium kiểm tra 40 tổ hợp tab/màn hình và bốn chiều rộng với dữ liệu giả lập chỉ trong trình duyệt.

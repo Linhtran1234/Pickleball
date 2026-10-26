@@ -383,10 +383,10 @@ RENDERERS.board = function(){
     <div class="board-grid">
       ${GROUPS.map(g=>`
         <div class="board-col">
-          <div class="board-col-head">${groupChip(g, 52)}<span class="small">${occupantsOfGroup(g).length}/5</span></div>
+          <div class="board-col-head"><div class="board-group-brand">${groupChip(g, 44)}<span class="board-group-caption">${occupantsOfGroup(g).length} / 5 đội đã xếp</span></div>${isAdmin()?`<button class="board-logo-edit" onclick="openGroupLogoModal('${g}')" aria-label="Đổi logo bảng ${g}">${AppUX.icon('teams')} Đổi logo</button>`:''}</div><div class="board-group-progress" aria-hidden="true"><span style="width:${occupantsOfGroup(g).length*20}%"></span></div>
           ${LEVELS.map(l=>{
             const t = teamSlot(g,l);
-            const clickAttr = canEdit ? ` onclick="openSlotPicker('${g}','${l}')"` : '';
+            const clickAttr = canEdit ? ` role="button" tabindex="0" aria-label="Chọn đội bảng ${g}, level ${l}" onclick="openSlotPicker('${g}','${l}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"` : '';
             return `
             <div class="board-slot ${t?'':'empty'}"${clickAttr} style="${canEdit?'cursor:pointer;':'cursor:default;'}">
               <span class="lvl-badge" style="background:${LEVEL_INFO[l].color};min-width:20px;height:20px;padding:0;justify-content:center;flex-shrink:0;">${l}</span>
@@ -404,7 +404,7 @@ RENDERERS.board = function(){
                     </div>
                   </div>
                 </div>
-              ` : `<span>${canEdit ? 'Trống — bấm để xếp đội' : 'Trống'}</span>`}
+              ` : `<span>${canEdit ? 'Chọn đội thi đấu' : 'Chưa xếp đội'}</span>`}
             </div>`;
           }).join('')}
         </div>
@@ -500,4 +500,21 @@ function saveSlotPicker(group, level){
   closeModal();
   render();
   showToast('Đã cập nhật bảng đấu','success');
+}
+function openGroupLogoModal(group){
+  if(!isAdmin()||!GROUPS.includes(group))return;
+  openModal(`<div class="modal-head"><h3>Logo bảng ${group}</h3><button class="modal-close" onclick="closeModal()">✕</button></div><div class="modal-body"><div class="group-logo-preview">${groupLogoImg(group,88)}</div><div class="form-row"><label for="groupLogoUrl">Đường dẫn ảnh logo</label><input class="input" id="groupLogoUrl" maxlength="2000" placeholder="https://…/logo.png" value="${escapeHtml(STATE.groupLogos?.[group]||'')}" oninput="previewGroupLogo('${group}')"><p class="help-text">Dán URL ảnh công khai (HTTPS) hoặc đường dẫn assets/. Để trống để dùng logo chữ cái mặc định. Logo áp dụng cho cả bảng và các đội trong bảng.</p></div></div><div class="modal-foot"><button class="btn" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="saveGroupLogo('${group}')">Lưu logo</button></div>`);
+}
+function previewGroupLogo(group){
+  const value=document.getElementById('groupLogoUrl').value.trim();
+  const img=document.querySelector('.group-logo-preview img');
+  if(img)img.src=Tournament.safeImageUrl(value)&&value?value:GROUP_INFO[group].logo;
+}
+function saveGroupLogo(group){
+  if(!isAdmin()||!GROUPS.includes(group))return;
+  const value=document.getElementById('groupLogoUrl').value.trim();
+  if(value.length>2000||!Tournament.safeImageUrl(value)){showToast('Hãy dùng URL ảnh HTTP(S) hoặc đường dẫn assets/.','error');return;}
+  STATE.groupLogos={...(STATE.groupLogos||{})};
+  if(value)STATE.groupLogos[group]=value;else delete STATE.groupLogos[group];
+  saveState();closeModal();render();showToast('Đã lưu logo bảng '+group,'success');
 }

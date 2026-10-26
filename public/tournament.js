@@ -29,7 +29,7 @@
       const match=state.matches.find(m=>m.id===live.matchId&&!m.empty);
       if(!match||Number(match.court)!==Number(live.court)||match.team1!==live.team1||match.team2!==live.team2)continue;
       const a=state.teams.find(t=>t.id===match.team1),b=state.teams.find(t=>t.id===match.team2);if(!a||!b)continue;
-      const team=t=>({name:t.group?'Bảng '+t.group:t.id,logo:t.group?'assets/groups/'+t.group+'.svg':'',players:[t.p1.name,t.p2.name]});
+      const team=t=>({name:t.group?'Bảng '+t.group:t.id,logo:t.group?(state.groupLogos?.[t.group]||'assets/groups/'+t.group+'.svg'):'',players:[t.p1.name,t.p2.name]});
       const index=courts.findIndex(c=>Number(c.court)===Number(live.court));if(index<0)continue;
       courts[index]={court:Number(live.court),status:live.status,teamA:team(a),teamB:team(b),scoreA:live.scoreA,scoreB:live.scoreB,note:[match.time,'Level '+match.level].filter(Boolean).join(' · '),matchId:match.id,source:'match'};
     }
@@ -42,6 +42,7 @@
     if(state.teams.length>1000 || state.waiting.length>2000 || state.matches.length>10000) fail('Dữ liệu vượt quá giới hạn hỗ trợ');
     if(state.eventName!==undefined && (typeof state.eventName!=='string'||!state.eventName.trim()||state.eventName.length>300)) fail('Tên giải không hợp lệ');
     if(state.tournamentStatus!==undefined && !['setup','started'].includes(state.tournamentStatus)) fail('Trạng thái giải không hợp lệ');
+    if(state.groupLogos!==undefined && (!state.groupLogos || typeof state.groupLogos!=='object' || Array.isArray(state.groupLogos) || Object.entries(state.groupLogos).some(([g,url])=>!GROUPS.includes(g)||!safeImageUrl(url)||url.length>2000))) fail('Logo bảng không hợp lệ');
     const ids=new Set(),slots=new Set(),players=new Set(),matches=new Set();
     const id=(value,set,label)=>{
       if(typeof value!=='string'||!/^[A-Za-z0-9_-]{1,100}$/.test(value)||['__proto__','constructor','prototype'].includes(value)||set.has(value)) fail(`${label}: mã trùng hoặc không hợp lệ`);

@@ -183,3 +183,23 @@ button{position:relative;overflow:hidden;}
 .anniversary-art{display:block;width:100%;height:auto;}
 .event-anniversary::after{display:none;}
 @media(min-width:1201px){.event-anniversary{width:280px;}}
+
+/* Keep the company suffix together at every title width. */
+.company-phrase{white-space:nowrap;display:inline-block;}
+.brand-text h1{max-width:540px;text-wrap:pretty;}
+/* Individual group cards replace the dense continuous matrix. */
+.board-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;gap:20px;border:0;background:transparent;overflow:visible;}
+.board-col{display:block;min-width:0;border:1px solid #dce7f1;border-radius:17px;overflow:hidden;background:#fff;box-shadow:0 5px 20px #075ba608;transition:box-shadow .25s,transform .25s;}
+.board-col:hover{box-shadow:0 10px 28px #075ba612;}
+.board-col-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:17px;background:linear-gradient(120deg,#075ba6,#073b70);border:0;min-height:95px;}
+.board-group-brand{min-width:0;}.board-col-head .grp-chip{font-size:15px;gap:11px;}.board-col-head .grp-logo{object-fit:contain;background:#fff;border-radius:12px;padding:3px;}.board-group-caption{display:block;color:#b9d8ef;font-size:10px;margin:8px 0 0 55px;}
+.board-logo-edit{display:flex;align-items:center;gap:5px;flex-shrink:0;border:1px solid #ffffff38;background:#ffffff12;color:#fff;border-radius:8px;padding:8px;font-size:9px;}.board-logo-edit:hover{background:#ffffff25;}.board-logo-edit .ux-icon{width:13px;height:13px;}
+.board-group-progress{height:3px;background:#e4eef6;}.board-group-progress>span{height:100%;display:block;background:#e32a40;transition:width .3s;}
+.board-col .board-slot{min-height:83px;margin:8px 10px;padding:13px 12px;border:1px solid #e4edf5;border-radius:11px;gap:12px;background:#fbfdff;justify-content:flex-start;}
+.board-col .board-slot.empty{background:#f5f9fc;border:1px dashed #d6e3ed;color:#88a2b6;font-size:10px;font-style:normal;}
+.board-slot[role=button]:hover,.board-slot[role=button]:focus-visible{background:#edf6ff;border-color:#80b4d9;outline:2px solid #b9d9ef;outline-offset:1px;}
+.board-slot .player-name{font-size:12px;line-height:1.7;overflow-wrap:anywhere;}.board-slot .team-sub{font-size:9px;}.board-slot .amp{color:#d7192d;}.board-slot .lvl-badge{border-radius:7px;}
+.group-logo-preview{display:flex;justify-content:center;padding:20px;margin-bottom:18px;background:#f0f7fd;border:1px solid #dce8f2;border-radius:14px;}.group-logo-preview img{object-fit:contain;border-radius:14px;}
+@media(max-width:1000px){.board-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}}
+@media(max-width:600px){.board-grid{grid-template-columns:minmax(0,1fr);gap:16px;}.board-col-head{padding:15px;}.board-col .board-slot{min-height:70px;}.brand-text h1{max-width:none;}}
+@media print{.board-logo-edit{display:none;}.board-grid{grid-template-columns:repeat(3,minmax(0,1fr));}.board-col{break-inside:avoid;}}
