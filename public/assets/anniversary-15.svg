@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-labelledby="title">
+<title id="title">15 năm thành lập công ty</title>
+<defs>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2=".7"><stop stop-color="#815000"/><stop offset=".16" stop-color="#ffe49a"/><stop offset=".28" stop-color="#fff6bc"/><stop offset=".37" stop-color="#d4940a"/><stop offset=".53" stop-color="#ffdd55"/><stop offset=".67" stop-color="#fff4ad"/><stop offset=".8" stop-color="#c68603"/><stop offset="1" stop-color="#ffdf6b"/></linearGradient>
+ <linearGradient id="edge" x2=".7" y2="1"><stop stop-color="#fff6c9"/><stop offset=".5" stop-color="#d99b0b"/><stop offset="1" stop-color="#8e5700"/></linearGradient>
+ <linearGradient id="blue"><stop stop-color="#002d64"/><stop offset=".45" stop-color="#197ec5"/><stop offset=".65" stop-color="#6eb6e9"/><stop offset=".8" stop-color="#005399"/><stop offset="1" stop-color="#002553"/></linearGradient>
+ <linearGradient id="ribbon"><stop stop-color="#c18400"/><stop offset=".18" stop-color="#ffdf63"/><stop offset=".3" stop-color="#b67a00"/><stop offset=".46" stop-color="#ffdf62"/><stop offset=".67" stop-color="#fff1a2"/><stop offset=".84" stop-color="#e9b127"/><stop offset="1" stop-color="#fff2a1"/></linearGradient>
+ <linearGradient id="shine"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+ <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="1" dy="5" stdDeviation="3" flood-color="#193d69" flood-opacity=".22"/></filter>
+ <path id="ribbonLine" d="M63 252 Q181 271 317 211"/>
+ <clipPath id="numerals"><text x="73" y="209" font-family="Arial,Helvetica,sans-serif" font-size="220" font-style="italic" font-weight="900" letter-spacing="-22">15</text></clipPath>
+</defs>
+<style>
+.sheen{animation:sheen 5.8s ease-in-out infinite;transform:translateX(-290px)}
+.spark{transform-box:fill-box;transform-origin:center;animation:spark 4s ease-in-out infinite}
+@keyframes sheen{0%,25%{transform:translateX(-290px)}65%,100%{transform:translateX(360px)}}
+@keyframes spark{0%,25%,100%{opacity:0;transform:scale(.4) rotate(0deg)}45%,60%{opacity:1;transform:scale(1) rotate(40deg)}}
+@media(prefers-reduced-motion:reduce){.sheen,.spark{animation:none}.sheen{opacity:0}.spark{opacity:.6}}
+</style>
+<g filter="url(#shadow)">
+ <!-- A folded blue return gives the gold numeral and ribbon real depth. -->
+ <path d="M37 235 Q60 207 108 226 Q225 261 276 178 Q295 126 258 104 Q315 126 289 192 Q269 260 159 276 Q75 283 37 235Z" fill="url(#blue)"/>
+ <text x="79" y="215" font-family="Arial,Helvetica,sans-serif" font-size="220" font-style="italic" font-weight="900" letter-spacing="-22" fill="#916000" stroke="#825001" stroke-width="3">15</text>
+ <text x="73" y="209" font-family="Arial,Helvetica,sans-serif" font-size="220" font-style="italic" font-weight="900" letter-spacing="-22" fill="url(#gold)" stroke="url(#edge)" stroke-width="2.4" paint-order="stroke fill">15</text>
+ <g clip-path="url(#numerals)"><path class="sheen" d="M0 0H36L-34 250H-70Z" fill="url(#shine)"/></g>
+ <text x="225" y="176" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="900" fill="#073b70" stroke="#f5fbff" stroke-width="5" paint-order="stroke fill">NĂM</text>
+ <path d="M17 231 L70 215 L95 230 L300 199 L344 193 L329 218 L350 237 Q202 293 55 267 L21 273 L34 251Z" fill="url(#ribbon)" stroke="#f5d45e" stroke-width="1"/>
+ <path d="M55 267 L70 247 L70 215 Q85 218 95 230 L80 255Z" fill="url(#gold)"/>
+ <path d="M57 266 Q183 289 337 239" fill="none" stroke="#fff2ae" stroke-width="1.5" opacity=".8"/>
+ <text font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="900" fill="#513600"><textPath href="#ribbonLine" startOffset="50%" text-anchor="middle">THÀNH LẬP CÔNG TY</textPath></text>
+</g>
+<path class="spark" d="M103 47L106 58L117 61L106 64L103 75L100 64L89 61L100 58Z" fill="#fff9d1"/>
+</svg>

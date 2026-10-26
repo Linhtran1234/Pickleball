@@ -47,3 +47,11 @@ Tên chính thức là **BMT MATERIALS** ở mọi nơi hiển thị và file Ex
 Màu xanh dẫn dắt các nền lớn, typography và sân đấu; đỏ BMT tạo khoảng 30% điểm nhấn thị giác qua mảng PICKLEBALL, CTA, bộ lọc đang chọn, icon điều hướng, bảng khán giả LIVE và footer. Các dải màu header/ticker chia xanh–đỏ 70/30. Vàng chỉ giữ làm điểm nhấn kỷ niệm 15 năm và một số chi tiết thể thao. Đây là tỷ lệ phối màu thị giác, không phải tỷ lệ pixel của ảnh nền.
 
 Đã kiểm tra 26 test tự động và 40 tổ hợp tab/kích thước màn hình trong Chromium, bao gồm hỗ trợ giảm chuyển động.
+
+## Banner theo màu poster và kỷ niệm 2.5D
+
+Banner khôi phục chữ BMT xanh đậm, PICKLEBALL vàng trên mảng cọ xanh và 2026 trắng viền bóng xanh. Các điểm nhấn đỏ của phần còn lại website được giữ. Nền sân và VĐV không thay đổi.
+
+Cụm kỷ niệm dùng vector riêng `public/assets/anniversary-15.svg`: số 15 nghiêng, vàng kim có viền nổi và chiều sâu, NĂM màu xanh trong lòng số 5, lụa vàng cong có nếp gấp và phần lụa xanh phía sau theo mẫu poster. Giữ nền trong suốt và vị trí cao để không che mặt VĐV nam. Hiệu ứng gồm ánh sáng lướt qua mặt số, điểm sáng và chuyển động nổi nhẹ; hỗ trợ prefers-reduced-motion. Vector giữ chữ rõ ở desktop/mobile.
+
+Kiểm tra: 26 test đạt; Chromium xác nhận 40 tổ hợp tab/kích thước, banner tràn viền và giảm chuyển động. Đã xem ảnh desktop/mobile sau cập nhật.

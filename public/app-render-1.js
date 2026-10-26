@@ -43,9 +43,7 @@ RENDERERS.overview = function(){
         </div>
       </div>
       <div class="event-anniversary" aria-label="Kỷ niệm 15 năm thành lập công ty">
-        <span class="anniversary-top">HÀNH TRÌNH VỮNG BỀN</span>
-        <div class="anniversary-number">15<span>NĂM</span></div>
-        <span class="anniversary-ribbon">THÀNH LẬP CÔNG TY</span>
+        <img class="anniversary-art" src="assets/anniversary-15.svg" alt="15 năm thành lập công ty" width="360" height="300">
       </div>
       <aside class="ux-countdown"><span class="ux-countdown-label"><span class="ux-pulse-dot"></span> ĐẾM NGƯỢC ĐẾN NGÀY HỘI</span><div id="eventCountdown" class="ux-countdown-digits" role="timer" aria-live="off" aria-label="Đếm ngược đến 07 giờ ngày 14 tháng 11 năm 2026"></div></aside>
     </div>

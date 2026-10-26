@@ -172,3 +172,14 @@ button{position:relative;overflow:hidden;}
 .live-sidebar{border-top:3px solid #d82b40;}.live-sidebar-tabs button[aria-selected=true]{background:#b81931;border-color:#ec758666;}.live-sidebar-tabs button[aria-selected=true]:hover{background:#cd2039;}
 .live-score-btn{background:#bc1b3526;border-color:#e06b7c55;color:#ffdce2;}.live-score-btn:hover{background:#bc1b354a;}
 .site-footer{background:linear-gradient(110deg,#062f53 0%,#07518a 65%,#073b70 70%,#87162d 100%);}.footer-bottom .footer-tag{background:#ce28412b;border-color:#e6587033;color:#ffdade;}
+
+/* Match the supplied poster typography; blue/red accents remain elsewhere. */
+.event-brand{color:#063e7b;}
+.event-sport{color:#ffe329;text-shadow:1px 2px 0 #003e6c80;}
+.event-sport::before{background:linear-gradient(100deg,#075baa,#004682);}
+.event-sport::after{background:linear-gradient(90deg,#7fc749,#ffe329);}
+.event-year{color:#fff;text-shadow:1px 2px 0 #075398,2px 3px 0 #075398;}
+.event-anniversary{padding:0;filter:drop-shadow(0 5px 8px #65450015);}
+.anniversary-art{display:block;width:100%;height:auto;}
+.event-anniversary::after{display:none;}
+@media(min-width:1201px){.event-anniversary{width:280px;}}
