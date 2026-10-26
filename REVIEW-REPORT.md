@@ -58,8 +58,8 @@ Kiểm tra bổ sung trên Chromium thật: 40 tổ hợp 8 tab × 5 chiều r�
 
 ## Cập nhật banner và LIVE tự động
 
-- Chỉnh ảnh VĐV nữ thành quần thể thao xanh phủ gối/áo dáng thoải mái; giữ cảnh sân và bố cục gốc. Ảnh được chỉnh bằng công cụ hình ảnh, không vẽ lại logo.
-- Huy hiệu 15 năm lớn hơn, số vàng trên bảng xanh đậm viền vàng; header đổi gradient trắng–xanh nhạt. Kiểm tra full-bleed và responsive trên năm kích thước như trên.
+- Chỉnh váy thể thao xanh của VĐV nữ dài hơn, che kín khi vận động; giữ cảnh sân và bố cục gốc. Ảnh được chỉnh bằng công cụ hình ảnh, không vẽ lại logo.
+- Chữ 15 năm lớn hơn, giữ kiểu chữ vàng trên nền trong suốt; header đổi gradient trắng–xanh nhạt. Kiểm tra full-bleed và responsive trên năm kích thước như trên.
 - API Admin theo từng sân phát điểm dở dang qua SSE. Bảng `live_scores` được thêm tự động khi khởi động, không xóa/migrate lại VĐV, điểm chính thức hoặc user.
 - Điểm 3–3/11–10 có thể phát khi đang chơi nhưng không được lưu làm kết quả. Lưu kết quả hợp lệ chuyển Finished; bản nhập trễ bị từ chối nếu điểm chính thức đã đổi.
 - Luồng phát không tăng revision của full-state, nên gõ điểm ở hai sân không gây 409 giả cho việc lưu dữ liệu chính thức. Các bản gửi của cùng một sân được xếp hàng.

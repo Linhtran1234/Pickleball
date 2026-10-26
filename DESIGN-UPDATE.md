@@ -31,4 +31,4 @@ Banner tràn viền hai bên, thêm countdown và dải nhận diện; nội dun
 
 ## Tinh chỉnh theo phản hồi
 
-Ảnh VĐV nữ đổi thành quần thể thao xanh phủ gối; huy hiệu 15 năm dùng nền xanh đậm và số vàng lớn để tăng tương phản. Header dùng gradient trắng–xanh nhạt; giữ logo BMT nguyên bản và banner tràn viền. LIVE nhận tự động trận/số điểm đang nhập qua SSE, đồng thời giữ chế độ nhập tay.
+Ảnh VĐV nữ giữ váy thể thao xanh, kéo dài hơn để che kín khi vận động; chữ 15 năm màu vàng được phóng lớn trên nền trong suốt, không dùng bảng nền xanh. Header dùng gradient trắng–xanh nhạt; giữ logo BMT nguyên bản và banner tràn viền. LIVE nhận tự động trận/số điểm đang nhập qua SSE, đồng thời giữ chế độ nhập tay.

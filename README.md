@@ -31,7 +31,7 @@ Server mặc định cổng 4000. Có thể đặt `PORT` và `TOURNAMENT_DB_PAT
 
 ## UI/UX & tương tác
 
-- Banner tràn viền, VĐV nữ mặc quần thể thao phủ gối; huy hiệu 15 năm vàng nổi bật trên nền xanh đậm. Header trắng–xanh nhạt cùng nhận diện, countdown và dải chuyển động.
+- Banner tràn viền, VĐV nữ mặc váy thể thao xanh dài hơn, che kín khi vận động; chữ 15 năm màu vàng được phóng lớn trên nền trong suốt. Header trắng–xanh nhạt cùng nhận diện, countdown và dải chuyển động.
 - Lộ trình 4 bước từ đăng ký đến ra sân; thống kê thật, không nạp dữ liệu giả.
 - Menu icon với thanh chọn chuyển động; dùng phím mũi tên để chuyển tab, hoặc **Ctrl/Cmd + K** để tìm trang nhanh không dấu.
 - Card xuất hiện khi cuộn, phản hồi nút/ripple, chuyển tab, modal/toast và nhấn mạnh tỷ số mới lưu. Tôn trọng **Reduce Motion** của thiết bị.
