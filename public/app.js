@@ -1,5 +1,5 @@
 /* =========================================================================
-   BMT MATERIAL PICKLEBALL 2026 — Tournament Manager
+   BMT MATERIALS PICKLEBALL 2026 — Tournament Manager
    Vanilla JS single-file app. Data persisted to localStorage.
    ========================================================================= */
 

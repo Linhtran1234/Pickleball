@@ -150,7 +150,7 @@ function getFullState() {
   return {
     version: 1,
     ...liveStore.read(),
-    eventName: (meta.eventName || Tournament.EVENT_NAME).replace(/^BMT MATERIALS PICKLEBALL/, 'BMT MATERIAL PICKLEBALL'),
+    eventName: (meta.eventName || Tournament.EVENT_NAME).replace(/^BMT MATERIAL PICKLEBALL/, 'BMT MATERIALS PICKLEBALL'),
     teams,
     waiting,
     matches,
@@ -207,7 +207,7 @@ const saveTx = db.transaction((state) => {
     });
   });
 
-  upsMeta.run({ key: 'eventName', value: (state.eventName || Tournament.EVENT_NAME).replace(/^BMT MATERIALS PICKLEBALL/, 'BMT MATERIAL PICKLEBALL') });
+  upsMeta.run({ key: 'eventName', value: (state.eventName || Tournament.EVENT_NAME).replace(/^BMT MATERIAL PICKLEBALL/, 'BMT MATERIALS PICKLEBALL') });
   upsMeta.run({ key: 'tournamentStatus', value: state.tournamentStatus || 'setup' });
   upsMeta.run({key:'liveCourts',value:JSON.stringify(state.liveCourts || Tournament.emptyState().liveCourts)});
   upsMeta.run({ key: 'updatedAt', value: String(now) });

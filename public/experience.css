@@ -151,3 +151,24 @@ button{position:relative;overflow:hidden;}
 @media(min-width:1650px){.live-dashboard{grid-template-columns:minmax(0,1fr) 340px;}.live-dashboard>.live-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:1100px){.live-dashboard{grid-template-columns:minmax(0,1fr) 280px;gap:14px;}.live-dashboard>.live-grid{grid-template-columns:minmax(0,1fr);}}
 @media(max-width:760px){.live-dashboard{grid-template-columns:minmax(0,1fr);}.live-sidebar{position:relative;top:auto;}.live-sidebar-panel{max-height:440px;}}
+
+/* BMT blue/red balance: blue surfaces lead; red marks the main action and selected accents. */
+:root{--brand-red:#d7192d;--brand-red-dark:#b91025;--brand-red-soft:#fff0f2;}
+.topbar::after,.site-footer::before{background:linear-gradient(90deg,#075ba6 0 70%,var(--brand-red) 70% 100%);}
+.tab-btn.active{border-bottom-color:var(--brand-red);}.tab-btn.active .ux-icon{color:var(--brand-red);}
+.event-sport{color:#fff;text-shadow:1px 2px 0 #780b2040;}.event-sport::before{background:linear-gradient(110deg,#ed2435,#bc1029);}.event-sport::after{background:linear-gradient(90deg,#075ba6 70%,#ed2435 70%);}
+.event-primary{background:linear-gradient(120deg,#db1d31,#b91025);border-color:#bd1428;box-shadow:0 7px 20px #bd142828;}.event-primary:hover{background:linear-gradient(120deg,#eb293d,#c8172d);box-shadow:0 9px 24px #bd142838;}
+.event-secondary{border-color:#e6bbc3;color:#ac1730;background:#ffffffde;}.event-secondary:hover{background:#fff1f3;border-color:#d36c7d;}
+.ux-event-ticker{background:linear-gradient(110deg,#07508c 0 70%,#bd152b 70% 100%);}
+.ux-journey-step:nth-child(2) .ux-step-number,.ux-journey-step:nth-child(4) .ux-step-number{color:#b8162c;background:#fcecef;}
+.ux-journey-step:nth-child(2):hover,.ux-journey-step:nth-child(4):hover{border-color:#e7a3ad;box-shadow:0 8px 20px #be183011;}
+.stat-card:nth-child(3n){border-top-color:#d7192d;}.stat-card:nth-child(3n) .stat-icon{background:#fff0f2;color:#ba182c;}
+.ux-page-heading h2>.ux-icon{color:var(--brand-red);}.ux-page-tag{border-color:#ebccd2;background:#fff7f8;color:#b2172d;}
+.ux-overview-heading .ux-eyebrow,.ux-page-heading .ux-eyebrow{color:#ad2940;}
+.btn-primary{background:linear-gradient(135deg,#d91b30,#b71128);border-color:#bd152c;box-shadow:0 4px 12px #bd152c1a;}.btn-primary:hover{background:linear-gradient(135deg,#eb293e,#c21930);}
+.pill.active{background:#bb1630;border-color:#bb1630;color:#fff;box-shadow:0 3px 8px #bb163020;}.pill.active:hover{background:#a91128;color:#fff;}
+.modal-head{border-bottom:2px solid #d7192d33;}.auth-screen{background:linear-gradient(110deg,#06477de8 0%,#06345cc9 70%,#a7112b99 100%),url('assets/bmt-court-hero.png') center/cover;}
+.live-wrap{background:radial-gradient(ellipse at top right,#c4143030,transparent 45%),radial-gradient(ellipse at top left,#09639544,transparent 65%),linear-gradient(145deg,#042e53,#071d38);}
+.live-sidebar{border-top:3px solid #d82b40;}.live-sidebar-tabs button[aria-selected=true]{background:#b81931;border-color:#ec758666;}.live-sidebar-tabs button[aria-selected=true]:hover{background:#cd2039;}
+.live-score-btn{background:#bc1b3526;border-color:#e06b7c55;color:#ffdce2;}.live-score-btn:hover{background:#bc1b354a;}
+.site-footer{background:linear-gradient(110deg,#062f53 0%,#07518a 65%,#073b70 70%,#87162d 100%);}.footer-bottom .footer-tag{background:#ce28412b;border-color:#e6587033;color:#ffdade;}

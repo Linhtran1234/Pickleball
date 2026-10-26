@@ -1,4 +1,4 @@
-# Thiết kế theo nhận diện giải BMT Material 2026
+# Thiết kế theo nhận diện giải BMT Materials 2026
 
 ## Tài liệu đầu vào
 
@@ -35,7 +35,15 @@ Banner tràn viền hai bên, thêm countdown và dải nhận diện; nội dun
 
 ## Cập nhật thương hiệu và khu vực khán giả
 
-- Tên hiển thị thống nhất **BMT MATERIAL** trên header, banner, footer, hỗ trợ Admin và file Excel. Giữ nguyên logo gốc và khóa lưu trữ trình duyệt để bảo toàn phiên đăng nhập/dữ liệu hiện có. Tên giải cũ trong database được chuẩn hóa khi đọc/lưu, không reset giải.
+- Tên hiển thị thống nhất **BMT MATERIALS** trên header, banner, footer, hỗ trợ Admin và file Excel. Giữ nguyên logo gốc và khóa lưu trữ trình duyệt để bảo toàn phiên đăng nhập/dữ liệu hiện có. Tên giải cũ trong database được chuẩn hóa khi đọc/lưu, không reset giải.
 - Nâng cụm 15 năm trên desktop/tablet để dải băng không che mặt VĐV nam; chữ NĂM căn giữa dưới số. Thêm ánh vàng, điểm sáng và nhịp sáng nhẹ cho dải băng; tôn trọng tùy chọn giảm chuyển động.
 - LIVE có bảng bên phải với hai tab Đã kết thúc / Các đội. Kết quả lấy từ lịch đấu đã lưu tỷ số hợp lệ, giữ lịch sử khi sân chuyển trận. Danh sách đội hiển thị VĐV, bảng, level, số trận và thắng/thua. Điểm đang nhập chưa tính là kết quả chính thức. Trên màn hình nhỏ, bảng chuyển xuống dưới các sân.
 - Kiểm tra: 26 bài kiểm tra đạt; 40 tổ hợp tab/kích thước; dữ liệu giả lập chỉ trong trình duyệt với 30 đội và 7 kết quả chính thức, kiểm tra bố cục ở 6 chiều rộng và thao tác tab bằng bàn phím.
+
+## Phối màu xanh – đỏ và khôi phục tên MATERIALS
+
+Tên chính thức là **BMT MATERIALS** ở mọi nơi hiển thị và file Excel. Bản cập nhật chuẩn hóa tên dạng số ít trong database khi đọc/lưu; giữ khóa cache cũ, tài khoản và dữ liệu giải.
+
+Màu xanh dẫn dắt các nền lớn, typography và sân đấu; đỏ BMT tạo khoảng 30% điểm nhấn thị giác qua mảng PICKLEBALL, CTA, bộ lọc đang chọn, icon điều hướng, bảng khán giả LIVE và footer. Các dải màu header/ticker chia xanh–đỏ 70/30. Vàng chỉ giữ làm điểm nhấn kỷ niệm 15 năm và một số chi tiết thể thao. Đây là tỷ lệ phối màu thị giác, không phải tỷ lệ pixel của ảnh nền.
+
+Đã kiểm tra 26 test tự động và 40 tổ hợp tab/kích thước màn hình trong Chromium, bao gồm hỗ trợ giảm chuyển động.

@@ -186,7 +186,7 @@ app.get('/api/teams', (req, res) => {
 app.get('/api/health', (req, res) => res.json({ ok: true, time: Date.now() }));
 
 if(require.main===module) app.listen(PORT, () => {
-  console.log(`✅ BMT Material Pickleball server đang chạy tại http://localhost:${PORT}`);
+  console.log(`✅ BMT Materials Pickleball server đang chạy tại http://localhost:${PORT}`);
   console.log(`   Database: ${DB_PATH}`);
 });
 

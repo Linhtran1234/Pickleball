@@ -32,7 +32,7 @@
   function header(tab,state){
     const item=tabs.find(t=>t[0]===tab);if(!item||tab==='overview')return '';
     const counts={players:`${state.teams.length*2+state.waiting.length} VĐV`,teams:`${state.teams.length} cặp đấu`,board:`${state.teams.filter(t=>t.group).length}/30 ô đã xếp`,matches:`${state.matches.filter(m=>!m.empty&&m.team1&&m.team2).length} trận đấu`,ranking:'Bảng thành tích',live:'7 sân thi đấu',rules:'Fair Play'};
-    return `<header class="ux-page-heading"><div><p class="ux-eyebrow">BMT MATERIAL <span> / </span> NGÀY HỘI THỂ THAO 2026</p><h2>${icon(tab)}${item[1]}</h2><p class="ux-page-description">${item[2]}</p></div><div class="ux-page-tag">${icon(tab==='live'?'live':'bolt')}<span>${counts[tab]}</span></div></header>`;
+    return `<header class="ux-page-heading"><div><p class="ux-eyebrow">BMT MATERIALS <span> / </span> NGÀY HỘI THỂ THAO 2026</p><h2>${icon(tab)}${item[1]}</h2><p class="ux-page-description">${item[2]}</p></div><div class="ux-page-tag">${icon(tab==='live'?'live':'bolt')}<span>${counts[tab]}</span></div></header>`;
   }
   function syncNav(){
     const nav=document.getElementById('tabbar');if(!nav)return;

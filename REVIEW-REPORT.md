@@ -69,4 +69,4 @@ Kiểm tra bổ sung trên Chromium thật: 40 tổ hợp 8 tab × 5 chiều r�
 
 ## Bổ sung bảng khán giả LIVE
 
-26 test đạt, 0 thất bại. Kiểm tra thêm lịch sử kết quả chính thức độc lập với trận đang phát trên sân, danh sách 30 đội, giữ lựa chọn tab khi đồng bộ và bàn phím trái/phải. Chromium xác nhận bảng nằm bên phải ở desktop và chuyển xuống dưới trên mobile tại 6 chiều rộng; dữ liệu giả lập chỉ trong trình duyệt. Đổi tên hiển thị thành BMT MATERIAL, nâng chữ kỷ niệm, căn lại NĂM và thêm hiệu ứng ánh vàng/điểm sáng có hỗ trợ giảm chuyển động.
+26 test đạt, 0 thất bại. Kiểm tra thêm lịch sử kết quả chính thức độc lập với trận đang phát trên sân, danh sách 30 đội, giữ lựa chọn tab khi đồng bộ và bàn phím trái/phải. Chromium xác nhận bảng nằm bên phải ở desktop và chuyển xuống dưới trên mobile tại 6 chiều rộng; dữ liệu giả lập chỉ trong trình duyệt. Đổi tên hiển thị thành BMT MATERIALS, nâng chữ kỷ niệm, căn lại NĂM và thêm hiệu ứng ánh vàng/điểm sáng có hỗ trợ giảm chuyển động.

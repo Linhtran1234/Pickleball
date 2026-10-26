@@ -1,4 +1,4 @@
-# BMT Material Pickleball 2026 — GIẢI MỚI, DỮ LIỆU TRỐNG
+# BMT Materials Pickleball 2026 — GIẢI MỚI, DỮ LIỆU TRỐNG
 
 Giao diện BMT tràn viền theo logo `docs/RENEW.pdf` và phong cách poster đã duyệt. Giữ logic giải 6 bảng A–F × 5 level A–E, dự kiến 30 cặp/60 VĐV, 7 sân; lịch vòng tròn 75 trận được tạo khi xếp đội. Ngày dự kiến 14/11/2026, 07:00–12:00, Pickleball Văn Thánh.
 

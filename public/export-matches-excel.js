@@ -205,7 +205,7 @@ async function exportMatchesToExcel(){
   }
   try{
     const wb = new ExcelJS.Workbook();
-    wb.creator = 'BMT MATERIAL PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY';
+    wb.creator = 'BMT MATERIALS PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY';
     wb.created = new Date();
 
     const realMatches = STATE.matches.filter(m => !m.empty);
@@ -219,7 +219,7 @@ async function exportMatchesToExcel(){
     const allRows = matchesExportRowsAll(sorted);
     writeMatchSheet(
       wb, 'Tất cả',
-      'BMT MATERIAL PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY — LỊCH THI ĐẤU & TỶ SỐ (TẤT CẢ)',
+      'BMT MATERIALS PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY — LỊCH THI ĐẤU & TỶ SỐ (TẤT CẢ)',
       matchesExportSubtitle(allRows),
       MATCHES_EXPORT_COLS_ALL,
       allRows

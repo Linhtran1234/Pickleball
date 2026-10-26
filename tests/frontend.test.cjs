@@ -11,7 +11,7 @@ test('New tournament starts empty, ignores old browser cache, and renders 8 tabs
   const initial=w.eval('JSON.stringify(STATE)');
   for(const key of ['teams','waiting','matches']) assert.equal(w.eval(`STATE.${key}.length`),0);
   assert.equal(w.eval('STATE.tournamentStatus'),'setup');assert.equal(w.eval('rankGroups().length'),0);assert.equal(w.eval('CURRENT_USER'),null);assert.equal(w.localStorage.getItem('duhung-pickleball-2026-v1'),null);
-  assert.match(w.document.title,/BMT MATERIAL.*15 NĂM/);assert.equal(w.document.querySelector('.brand img').getAttribute('src'),'assets/bmt-logo.svg');
+  assert.match(w.document.title,/BMT MATERIALS.*15 NĂM/);assert.equal(w.document.querySelector('.brand img').getAttribute('src'),'assets/bmt-logo.svg');
   for(const role of ['user','admin']){
    w.eval(`CURRENT_USER={role:'${role}',displayName:'Test',local:true}`);
    for(const tab of ['overview','live','players','teams','board','matches','ranking','rules']){
