@@ -9,7 +9,7 @@
     return {court,status:'waiting',teamA:{name:'',logo:'',players:[]},teamB:{name:'',logo:'',players:[]},scoreA:null,scoreB:null,note:''};
   }
   function emptyState(){
-    return {version:1,eventName:EVENT_NAME,teams:[],waiting:[],matches:[],liveCourts:Array.from({length:7},(_,i)=>liveCourt(i+1)),tournamentStatus:'setup',updatedAt:Date.now()};
+    return {version:1,eventName:EVENT_NAME,teams:[],waiting:[],matches:[],liveScores:[],liveUpdatedAt:0,liveCourts:Array.from({length:7},(_,i)=>liveCourt(i+1)),tournamentStatus:'setup',updatedAt:Date.now()};
   }
   function scoreError(s1,s2){
     if(s1===null && s2===null) return null;
@@ -21,6 +21,19 @@
   }
   function safeImageUrl(value){
     return typeof value==='string' && (value==='' || /^(https?:\/\/|assets\/|\/(?!\/))/i.test(value));
+  }
+  function displayLiveCourts(state){
+    const courts=(state.liveCourts||emptyState().liveCourts).map(c=>({...c}));
+    if(state.tournamentStatus!=='started')return courts;
+    for(const live of state.liveScores||[]){
+      const match=state.matches.find(m=>m.id===live.matchId&&!m.empty);
+      if(!match||Number(match.court)!==Number(live.court)||match.team1!==live.team1||match.team2!==live.team2)continue;
+      const a=state.teams.find(t=>t.id===match.team1),b=state.teams.find(t=>t.id===match.team2);if(!a||!b)continue;
+      const team=t=>({name:t.group?'Bảng '+t.group:t.id,logo:t.group?'assets/groups/'+t.group+'.svg':'',players:[t.p1.name,t.p2.name]});
+      const index=courts.findIndex(c=>Number(c.court)===Number(live.court));if(index<0)continue;
+      courts[index]={court:Number(live.court),status:live.status,teamA:team(a),teamB:team(b),scoreA:live.scoreA,scoreB:live.scoreB,note:[match.time,'Level '+match.level].filter(Boolean).join(' · '),matchId:match.id,source:'match'};
+    }
+    return courts;
   }
   function validateState(state){
     const fail=message=>{throw new Error(message);};
@@ -76,7 +89,7 @@
     }
     return state;
   }
-  const api={EVENT_NAME,LEVELS,GROUPS,STORAGE_PREFIX,liveCourt,emptyState,scoreError,safeImageUrl,validateState};
+  const api={EVENT_NAME,LEVELS,GROUPS,STORAGE_PREFIX,liveCourt,emptyState,scoreError,safeImageUrl,displayLiveCourts,validateState};
   if(typeof module!=='undefined'&&module.exports) module.exports=api;
   else root.Tournament=api;
 })(typeof window!=='undefined'?window:globalThis);

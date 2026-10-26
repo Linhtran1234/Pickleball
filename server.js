@@ -5,7 +5,7 @@
 const express = require('express');
 const path = require('path');
 const {
-  db, DB_PATH, getFullState, saveFullState,
+  db, DB_PATH, getFullState, saveFullState, liveStore,
   findUserByUsername, findUserById, listUsers,
   createUser, updateUserRole, updateUserDisplayName, resetUserPassword, deleteUser,
   verifyPasswordHash, SaveConflictError,
@@ -118,6 +118,27 @@ app.get('/api/state', (req, res) => {
   res.json(getFullState());
 });
 
+/* Public, one-way event stream; writing broadcast points still requires Admin. */
+const liveClients=new Set();
+function emitLive(){
+  const message='event: live\ndata: '+JSON.stringify(liveStore.read())+'\n\n';
+  for(const client of liveClients)client.write(message);
+}
+app.get('/api/events',(req,res)=>{
+  res.set({'Content-Type':'text/event-stream','Cache-Control':'no-cache, no-transform','Connection':'keep-alive','X-Accel-Buffering':'no'});res.flushHeaders();
+  res.write('retry: 1500\nevent: live\ndata: '+JSON.stringify(liveStore.read())+'\n\n');liveClients.add(res);
+  const heartbeat=setInterval(()=>res.write(': heartbeat\n\n'),20000);heartbeat.unref();
+  req.on('close',()=>{clearInterval(heartbeat);liveClients.delete(res);});
+});
+app.put('/api/live-scores/:court',adminRequired,(req,res)=>{
+  try{const data=liveStore.publish(Number(req.params.court),req.body,req.user.userId);emitLive();res.json(data);}
+  catch(error){res.status(error.status||400).json({error:error.message,code:error.code,...liveStore.read()});}
+});
+app.delete('/api/live-scores/:court',adminRequired,(req,res)=>{
+  try{const court=Number(req.params.court);if(!Number.isInteger(court)||court<1||court>7)return res.status(400).json({error:'Sân không hợp lệ'});const data=liveStore.detach(court,req.body?.matchId);emitLive();res.json(data);}
+  catch(error){res.status(error.status||400).json({error:error.message,code:error.code,...liveStore.read()});}
+});
+
 /* PUT: ghi đè toàn bộ state — chỉ Admin được phép chỉnh sửa dữ liệu.
    Body có thể kèm `baseUpdatedAt` (thời điểm client tải dữ liệu lần cuối)
    để server phát hiện xung đột nếu người khác đã lưu đè lên trước đó
@@ -127,6 +148,8 @@ app.put('/api/state', adminRequired, (req, res) => {
     const { baseUpdatedAt, ...state } = req.body || {};
     if(!Number.isSafeInteger(baseUpdatedAt)) return res.status(400).json({error:'Thiếu phiên bản dữ liệu. Vui lòng tải lại trang trước khi lưu.'});
     const saved = saveFullState(state, baseUpdatedAt);
+    for(const client of liveClients)client.write('event: state\ndata: '+JSON.stringify({updatedAt:saved.updatedAt})+'\n\n');
+    emitLive();
     res.json(saved);
   } catch (e) {
     if (e instanceof SaveConflictError) {

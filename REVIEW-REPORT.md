@@ -32,7 +32,7 @@
 
 ## Kiểm tra đã chạy
 
-- `npm test`: **18 test đạt, 0 thất bại/skip**. Bao gồm khởi tạo trống, cache cũ, 8 tab × 2 quyền, đăng ký/ghép/chia bảng/start, nhiều ca tỷ số, giữ bản nháp, LIVE, API quyền, đổi quyền/mật khẩu, nhập sai, lưu đồng thời/lỗi/retry reset giữ nguyên tài khoản, khôi phục Admin, điều hướng nhanh, focus bàn phím và thông báo an toàn.
+- `npm test`: **25 test đạt, 0 thất bại/skip**. Bao gồm khởi tạo trống, cache cũ, 8 tab × 2 quyền, đăng ký/ghép/chia bảng/start, nhiều ca tỷ số, giữ bản nháp, LIVE, API quyền, đổi quyền/mật khẩu, nhập sai, lưu đồng thời/lỗi/retry reset giữ nguyên tài khoản, khôi phục Admin, điều hướng nhanh, focus bàn phím và thông báo an toàn.
 - Chromium thật: 8 tab trống ở 390/768/1440px; đăng ký VĐV qua modal, auto-pair, chọn bảng, nhập JSON giả, start, nhập điểm và reload, lấy trận LIVE từ dữ liệu SQLite, tải JSON/Excel và xung đột 409 giữa hai Admin. Reset cuối kiểm tra và reload xác nhận trống.
 - File Excel kiểm tra đủ 6 cột bảng; lịch đủ 75 trận và 7 sheet trên fixture giả.
 - `npm audit`: **0 cảnh báo được báo cáo** tại thời điểm kiểm tra. Đây là kết quả audit dependency, không phải cam kết không có mọi lỗ hổng.
@@ -40,7 +40,7 @@
 
 ## Giữ nguyên và giới hạn
 
-Luật ghép cặp, vòng tròn, thắng/thua, trần điểm, xếp hạng, 6 bảng/5 level/7 sân được giữ. LIVE tiếp tục là dữ liệu trình chiếu riêng theo logic cũ. Các bài test tự động dùng tên giả sinh tại runtime, không phải danh sách người thật của giải trước.
+Luật ghép cặp, vòng tròn, thắng/thua, trần điểm, xếp hạng, 6 bảng/5 level/7 sân được giữ. LIVE đã bổ sung tự đồng bộ từ ô nhập điểm; dữ liệu phát dở dang được tách khỏi kết quả thi đấu/xếp hạng. Nhập tay vẫn được giữ. Các bài test tự động dùng tên giả sinh tại runtime, không phải danh sách người thật của giải trước.
 
 Chưa có thông tin liên hệ BMT hoặc tài sản nhà tài trợ nên không tự thêm. Đổi mật khẩu khởi tạo trước khi vận hành thực tế. Không tự triển khai website. Source được chuẩn bị để đẩy lên repository theo yêu cầu người dùng; tình trạng push được xác nhận trong lời bàn giao.
 
@@ -55,3 +55,14 @@ Chưa có thông tin liên hệ BMT hoặc tài sản nhà tài trợ nên khôn
 - Thêm `npm run admin:recover`: chạy tại máy chủ, không có API khôi phục công khai; không thay đổi VĐV/đội/trận hay user khác.
 
 Kiểm tra bổ sung trên Chromium thật: 40 tổ hợp 8 tab × 5 chiều rộng (1920/1440/768/390/320px), đo banner x=0 và width=viewport, kiểm tra motion thực/Reduce Motion, Ctrl+K, tìm không dấu, focus/Escape, hiện mật khẩu và trang hỗ trợ. Không có lỗi JavaScript hoặc cuộn ngang ngoài ý muốn.
+
+## Cập nhật banner và LIVE tự động
+
+- Chỉnh ảnh VĐV nữ thành quần thể thao xanh phủ gối/áo dáng thoải mái; giữ cảnh sân và bố cục gốc. Ảnh được chỉnh bằng công cụ hình ảnh, không vẽ lại logo.
+- Huy hiệu 15 năm lớn hơn, số vàng trên bảng xanh đậm viền vàng; header đổi gradient trắng–xanh nhạt. Kiểm tra full-bleed và responsive trên năm kích thước như trên.
+- API Admin theo từng sân phát điểm dở dang qua SSE. Bảng `live_scores` được thêm tự động khi khởi động, không xóa/migrate lại VĐV, điểm chính thức hoặc user.
+- Điểm 3–3/11–10 có thể phát khi đang chơi nhưng không được lưu làm kết quả. Lưu kết quả hợp lệ chuyển Finished; bản nhập trễ bị từ chối nếu điểm chính thức đã đổi.
+- Luồng phát không tăng revision của full-state, nên gõ điểm ở hai sân không gây 409 giả cho việc lưu dữ liệu chính thức. Các bản gửi của cùng một sân được xếp hàng.
+- Khi lưu xong, bản broadcast cũ không làm các ô nhập quay về số trước đó. Nhập lại/F5 tiếp tục từ bản LIVE còn dở dang.
+- Bảy test bổ sung bao phủ API quyền/validation, sân độc lập, điểm chính thức vs bản nháp, bản nhập đến trễ, chuyển nhập tay, SSE/reset và hồi quy ô nhập.
+- Chromium: hai context đăng nhập/xem độc lập, **tắt polling của màn hình xem** để xác nhận SSE thực sự cập nhật. Kiểm tra đúng tên VĐV/đội, hai sân, 11–10 bị từ chối khi lưu, 11–9 Finished, reload, nhập tay rồi tự nối lại và reset giữ Admin.

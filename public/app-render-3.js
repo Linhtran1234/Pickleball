@@ -181,10 +181,12 @@ function matchCardHtml(m, stt){
   const win2 = done && Number(m.score2) > Number(m.score1);
   const justScored = LAST_SCORED_MATCH === m.id;
   const canEdit = isAdmin() && isTournamentStarted();
+  const draft=liveDraftForMatch(m.id);
+  const inputScore1=draft?draft.scoreA:m.score1,inputScore2=draft?draft.scoreB:m.score2;
   const scoreHtml = canEdit ? `
-    <input type="number" min="0" value="${m.score1!==null?m.score1:''}" id="score1_${m.id}" class="${justScored?'just-bumped':''}" placeholder="-">
+    <input type="number" min="0" value="${inputScore1!=null?inputScore1:''}" id="score1_${m.id}" class="${justScored?'just-bumped':''}" placeholder="-">
     <span class="match-vs">:</span>
-    <input type="number" min="0" value="${m.score2!==null?m.score2:''}" id="score2_${m.id}" class="${justScored?'just-bumped':''}" placeholder="-">
+    <input type="number" min="0" value="${inputScore2!=null?inputScore2:''}" id="score2_${m.id}" class="${justScored?'just-bumped':''}" placeholder="-">
   ` : `
     <span class="score-readonly">${m.score1!==null?m.score1:'-'}</span>
     <span class="match-vs">:</span>
@@ -198,6 +200,7 @@ function matchCardHtml(m, stt){
       <span class="lvl-badge match-lvl" style="background:color-mix(in srgb, ${LEVEL_INFO[m.level].color} 14%, #fff);color:${LEVEL_INFO[m.level].color};border:1.5px solid color-mix(in srgb, ${LEVEL_INFO[m.level].color} 30%, #fff);">${levelDisplayName(m.level)} · ${courtLabel(m.court)}</span>
       <span class="match-round">${escapeHtml(m.time||'')}</span>
     </div>
+    ${canEdit ? `<div class="match-live-toolbar"><span class="match-live-hint">${draft?'Đang phát trên LIVE · '+courtLabel(m.court):'Nhập điểm để phát trực tiếp trên LIVE'}</span><button class="btn btn-sm" onclick="queueLiveMatch('${m.id}');flushLiveDraft(${Number(m.court)});switchTab('live')">${AppUX.icon('live')} Xem trên LIVE</button></div>` : ''}
     <div class="match-body">
       <div class="match-team match-team-1">
         ${groupLogoImg(m.groupA,36)}
@@ -244,6 +247,9 @@ function after_matches_render(){
   });
   // enter key to save
   document.querySelectorAll('.match-score input').forEach(inp=>{
+    const liveMatchId=inp.id.replace(/^score[12]_/, '');
+    inp.addEventListener('focus',()=>{const m=STATE.matches.find(m=>m.id===liveMatchId);if(m&&m.score1==null&&m.score2==null)queueLiveMatch(liveMatchId);});
+    inp.addEventListener('input',()=>queueLiveMatch(liveMatchId));
     inp.addEventListener('keydown', (e)=>{
       if(e.key==='Enter'){
         // LƯU Ý (bug đã sửa 2026-07-24): id của trận có thể tự chứa dấu "_"
@@ -299,6 +305,7 @@ function saveMatchScore(matchId){
   if(v1==='' && v2===''){
     // Cả 2 ô đều rỗng -> người dùng chủ động xoá tỷ số, cho phép
     m.score1 = null; m.score2 = null; m.status = 'pending';
+    publishOfficialLive(m);
     saveState();
     render();
     restoreUnsavedScoreInputs(unsaved);
@@ -321,6 +328,7 @@ function saveMatchScore(matchId){
   if(error){showToast(error,'error');return;}
 
   m.score1 = s1; m.score2 = s2; m.status = 'done';
+  publishOfficialLive(m);
   LAST_SCORED_MATCH = matchId;
   saveState();
   render();

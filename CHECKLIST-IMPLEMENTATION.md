@@ -12,3 +12,5 @@ Tài liệu đầu vào: checklist 26/10/2026, logo `docs/RENEW.pdf`, poster tha
 Xem [README](README.md) để cài mới, [báo cáo rà soát](REVIEW-REPORT.md) để biết các lỗi đã sửa và kiểm chứng.
 
 - **UI/UX mới nhất:** banner tràn viền, đếm ngược, lộ trình giải, menu icon, tìm trang nhanh, hiệu ứng tương tác và hỗ trợ bàn phím/giảm chuyển động.
+
+- **Phản hồi mới:** trang phục VĐV nữ kín đáo hơn, số 15 năm nổi bật, header trắng–xanh nhạt và LIVE tự động theo sân/điểm đang nhập, chỉ tính xếp hạng sau khi lưu kết quả.

@@ -68,6 +68,7 @@ function liveCourtCardHtml(c){
       <div class="live-court-name"><span class="ic">🏟️</span> Court ${c.court}<span style="color:var(--live-muted);font-weight:600;font-size:11px;">${escapeHtml(liveCourtLabel(c.court))}</span></div>
       ${statusBadge}
     </div>
+    ${c.source==='match' ? `<div class="live-source-tag">${AppUX.icon('bolt')} Đồng bộ từ lịch thi đấu</div>` : ''}
     <div class="live-matchup">
       <div class="live-team">
         ${liveTeamLogoHtml(teamA)}
@@ -85,7 +86,7 @@ function liveCourtCardHtml(c){
       ${scoreArea}
       ${c.note ? `<div class="live-note">${escapeHtml(c.note)}</div>` : ''}
     </div>
-    ${isAdmin() ? `<div class="live-card-foot"><button class="live-edit-btn" onclick="openLiveCourtModal(${c.court})">✏️ Cập nhật</button></div>` : ''}
+    ${isAdmin() ? `<div class="live-card-foot">${c.matchId ? `<button class="live-score-btn" onclick="openScoringMatch('${c.matchId}')">${AppUX.icon('matches')} Nhập điểm</button>` : ''}<button class="live-edit-btn" onclick="openLiveCourtModal(${c.court})">${c.source==='match'?'Nhập tay':'✏️ Cập nhật'}</button></div>` : ''}
   </div>`;
 }
 
@@ -101,13 +102,14 @@ function liveParticlesHtml(){
 }
 
 RENDERERS.live = function(){
-  const courts = (STATE.liveCourts && STATE.liveCourts.length===7) ? STATE.liveCourts.slice().sort((a,b)=>a.court-b.court) : defaultLiveCourts();
+  const courts = Tournament.displayLiveCourts(STATE).sort((a,b)=>a.court-b.court);
   return `
   <div class="live-wrap">
     <div class="live-particles">${liveParticlesHtml()}</div>
     <div class="live-hero">
       <h2><span class="dot"></span> LIVE MATCHES</h2>
-      <p class="sub">7 Courts • Live Tournament</p>
+      <p class="sub">7 sân · Tự động theo trận đang nhập điểm</p>
+      <p class="live-sync-caption">Điểm trực tiếp cập nhật ngay khi BTC nhập. Kết quả xếp hạng chỉ tính sau khi lưu tỷ số hợp lệ.</p>
       <div class="live-topline">
         <span class="live-badge-big">🔴 LIVE</span>
         <span class="live-clock" id="liveClockDisplay">--:--<span class="blink">:</span>--</span>
@@ -141,7 +143,7 @@ function after_live_render(){
 /* ---------------------------------------------------------------------- */
 function getLiveCourt(courtNum){
   ensureLiveCourts(STATE);
-  return STATE.liveCourts.find(x=>x.court===courtNum) || defaultLiveCourt(courtNum);
+  return Tournament.displayLiveCourts(STATE).find(x=>x.court===courtNum) || defaultLiveCourt(courtNum);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -246,6 +248,8 @@ function openLiveCourtModal(courtNum){
   openModal(`
     <div class="modal-head"><h3>🔴 Cập nhật Sân ${courtNum}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
+      <input type="hidden" id="live_linked_match" value="${escapeHtml(c.matchId||'')}">
+      ${c.matchId ? `<p class="help-text">Sân đang tự đồng bộ từ lịch. Lưu form này sẽ chuyển sang nhập tay; lần nhập điểm tiếp theo sẽ bật lại đồng bộ.</p>` : ''}
       <div class="form-row"><label>Trạng thái</label>
         <div class="live-status-pick" id="liveStatusPick">
           <button type="button" data-st="waiting" class="${st==='waiting'?'active':''}">⏳ Waiting</button>
@@ -350,13 +354,15 @@ function clearLiveCourtForm(courtNum){
   showToast('Đã xóa dữ liệu form, sẵn sàng nhập lại', 'success');
 }
 
-function saveLiveCourt(courtNum){
+async function saveLiveCourt(courtNum){
   if(!isAdmin()) return;
   ensureLiveCourts(STATE);
   let idx = STATE.liveCourts.findIndex(x=>x.court===courtNum);
   if(idx===-1){ STATE.liveCourts.push(defaultLiveCourt(courtNum)); idx = STATE.liveCourts.length-1; }
 
-  const status = document.getElementById('live_status').value;
+  const liveForm=document.getElementById('live_status');
+  const originallyLinked=document.getElementById('live_linked_match')?.value||'';
+  const status = liveForm.value;
   const aName = document.getElementById('live_a_name').value.trim();
   const aLogo = document.getElementById('live_a_logo').value.trim();
   const aP1 = document.getElementById('live_a_p1').value.trim();
@@ -372,6 +378,7 @@ function saveLiveCourt(courtNum){
   if(!Tournament.safeImageUrl(aLogo)||!Tournament.safeImageUrl(bLogo)){showToast('Logo phải là URL http/https hoặc đường dẫn ảnh trong ứng dụng','error');return;}
   for(const score of [sAraw,sBraw]) if(score!=='' && (!Number.isInteger(Number(score))||Number(score)<0||Number(score)>999)){showToast('Tỷ số LIVE phải là số nguyên 0–999','error');return;}
 
+  const queuedMatch=USE_API?await settleLiveCourt(courtNum):'';
   STATE.liveCourts[idx] = {
     court: courtNum,
     status: ['waiting','live','finished'].includes(status) ? status : 'waiting',
@@ -382,7 +389,12 @@ function saveLiveCourt(courtNum){
     note
   };
   saveState();
-  closeModal();
+  if(USE_API){
+    if(!await flushState())return;
+    const linked=queuedMatch||originallyLinked;
+    try{const res=await fetch(API_BASE+'/api/live-scores/'+courtNum,{method:'DELETE',headers:{'Content-Type':'application/json',...authHeaders()},body:JSON.stringify({matchId:linked})});const data=await res.json();applyLiveData(data);if(!res.ok)throw new Error(data.error||'Không chuyển được sang nhập tay');}catch(error){showToast(error.message,'error');return;}
+  }else{applyLiveData({liveScores:(STATE.liveScores||[]).filter(row=>Number(row.court)!==Number(courtNum)),liveUpdatedAt:Date.now()});}
+  if(document.getElementById('live_status')===liveForm)closeModal();
   render();
   showToast('Đã cập nhật Sân ' + courtNum, 'success');
 }

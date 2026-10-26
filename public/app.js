@@ -205,6 +205,7 @@ async function boot(){
     showToast(USE_API ? '✅ Đã kết nối database (server)' : '⚠️ Không có server — đang chạy tạm bằng localStorage trình duyệt', USE_API ? 'success' : 'error');
   }, 300);
   startAutoRefresh();
+  startLiveSync();
 }
 
 /* =========================================================================
@@ -223,6 +224,7 @@ const AUTO_REFRESH_INTERVAL_MS = 8000;
 let autoRefreshTimer = null;
 
 function isUserMidEdit(){
+  if(typeof hasPendingLiveScore==='function'&&hasPendingLiveScore())return true;
   if(saveDebounceTimer || saveInFlight || saveRevision > savedRevision) return true; // có thay đổi chưa kịp lưu lên server
   const el = document.activeElement;
   if(el && ['INPUT','TEXTAREA','SELECT'].includes(el.tagName)) return true;
@@ -241,6 +243,7 @@ async function refreshStateQuietly(){
     if(!res.ok) return;
     AppUX.setConnection(true);
     const data = await res.json();
+    applyLiveData(data);
     if(!STATE || !data || data.updatedAt === lastServerUpdatedAt) return; // không có gì mới
     if(isUserMidEdit()) return; // double-check ngay trước khi ghi đè (kể cả sau await)
     STATE = data;
@@ -326,6 +329,7 @@ async function loadState(){
       if(!STATE.tournamentStatus) STATE.tournamentStatus = 'setup';
       ensureLiveCourts(STATE);
       USE_API = true;
+      startLiveSync();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
       return;
     }
@@ -372,7 +376,7 @@ async function flushState(options={}){
         if(res.status===401||res.status===403){saveBlocked=true;throw new Error('Phiên đăng nhập hoặc quyền sửa đã thay đổi. Xuất bản sao trước khi đăng nhập lại.');}
         throw new Error(data.error||'Không lưu được dữ liệu');
       }
-      lastServerUpdatedAt=data.updatedAt;STATE.updatedAt=data.updatedAt;savedRevision=revision;AppUX.setConnection(true);
+      lastServerUpdatedAt=data.updatedAt;STATE.updatedAt=data.updatedAt;savedRevision=revision;applyLiveData(data);AppUX.setConnection(true);
       localStorage.setItem(STORAGE_KEY,JSON.stringify(STATE));
       setSaveStatus(savedRevision===saveRevision?'Đã lưu':'Chưa lưu');
       return true;
@@ -553,6 +557,7 @@ function restoreTournamentSetup(){
     m.score1 = null; m.score2 = null; m.status = 'pending';
   });
   STATE.tournamentStatus = 'setup';
+  clearLiveDrafts();
   saveState();
   render();
   showToast('↩️ Đã khôi phục — có thể sửa Bảng/đội trở lại. Toàn bộ tỷ số đã được xoá.', 'success');
@@ -839,6 +844,7 @@ document.getElementById('fileImport').addEventListener('change', (e)=>{
 document.getElementById('btnReset').addEventListener('click', ()=>{
   if(!isAdmin()) return;
   if(!confirm('Tạo lại giải từ đầu? Toàn bộ VĐV, đội, lịch, tỷ số, ghi chú và dữ liệu LIVE sẽ bị xóa. Không thể hoàn tác từ ứng dụng.')) return;
+  clearLiveDrafts();
   STATE = freshState();
   saveState();
   render();

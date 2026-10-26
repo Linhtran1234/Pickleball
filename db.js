@@ -92,6 +92,8 @@ CREATE INDEX IF NOT EXISTS idx_matches_teams ON matches(team1_id, team2_id);
   if (!cols.includes('is_empty')) db.exec(`ALTER TABLE matches ADD COLUMN is_empty INTEGER DEFAULT 0`);
 })();
 
+const liveStore=require('./live-store').createLiveStore(db);
+
 /* ---------------------------------------------------------------------- */
 /* READ: DB rows -> STATE JSON (đúng shape mà frontend đang dùng)          */
 /* ---------------------------------------------------------------------- */
@@ -147,11 +149,12 @@ function getFullState() {
 
   return {
     version: 1,
+    ...liveStore.read(),
     eventName: meta.eventName || Tournament.EVENT_NAME,
     teams,
     waiting,
     matches,
-    liveCourts, // 7 sân "LIVE MATCHES" — null nếu chưa từng lưu, frontend tự điền mặc định
+    liveCourts, // 7 cấu hình nhập tay; liveScores là luồng tự động độc lập
     tournamentStatus: meta.tournamentStatus || 'setup',
     updatedAt: Number(meta.updatedAt || Date.now()),
   };
@@ -247,7 +250,9 @@ const checkedSave = db.transaction((state,baseUpdatedAt)=>{
     const current=getMetaUpdatedAt();
     if(current!==null && Number(baseUpdatedAt)!==current) throw new SaveConflictError(current);
   }
+  const previous=getFullState();
   saveTx(state);
+  liveStore.afterStateSave(previous,state);
   return getFullState();
 });
 function saveFullState(state,baseUpdatedAt){
@@ -365,7 +370,7 @@ initMeta.run('updatedAt',String(Date.now()));
 initMeta.run('liveCourts',JSON.stringify(Tournament.emptyState().liveCourts));
 
 module.exports = {
-  db, getFullState, saveFullState, isEmpty, getMetaUpdatedAt, SaveConflictError,
+  db, getFullState, saveFullState, isEmpty, getMetaUpdatedAt, SaveConflictError, liveStore,
   hashPassword, verifyPasswordHash, seedDefaultUsersIfEmpty, DB_PATH,
   findUserByUsername, findUserById, listUsers,
   createUser, updateUserRole, updateUserDisplayName, resetUserPassword, deleteUser,

@@ -70,7 +70,7 @@
   }
   function afterRender(tab,state){
     const app=document.getElementById('app');const fresh=tab!==previousTab;
-    app.classList.toggle('is-overview',tab==='overview');app.classList.toggle('ux-tab-enter',fresh);document.body.dataset.activeTab=tab;
+    app.classList.toggle('is-overview',tab==='overview');app.classList.toggle('ux-tab-enter',fresh);app.classList.toggle('ux-stream-update',tab==='live'&&!fresh);document.body.dataset.activeTab=tab;
     app.setAttribute('role','tabpanel');app.setAttribute('aria-labelledby','tab-'+tab);app.tabIndex=-1;
     decorate(app);decorate(document.querySelector('.topbar'));syncNav();updateCountdown();
     const pill=document.getElementById('uxRoleLabel');if(pill)pill.textContent=typeof isAdmin==='function'&&isAdmin()?'BAN TỔ CHỨC':'CÙNG HÒA NHỊP NGÀY HỘI';

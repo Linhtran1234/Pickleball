@@ -17,7 +17,7 @@
 
 ## Kiểm tra
 
-`npm test`: 18 bài test backend/frontend với dữ liệu giả riêng, gồm trạng thái trống, 8 tab ở 2 quyền và luồng tạo giải mới.
+`npm test`: 25 bài test backend/frontend với dữ liệu giả riêng, gồm trạng thái trống, 8 tab ở 2 quyền và luồng tạo giải mới.
 
 Chromium thật: 390px, 768px, 1440px; 8 tab ở mỗi kích thước; logo/tài sản tải thành công; đăng nhập Admin và xuất Excel trên database kiểm thử riêng. File Excel chia bảng đủ 6 cột, lịch đấu đủ 75 trận/7 sheet.
 
@@ -28,3 +28,7 @@ Node.js 22: `npm ci`, `npm start`. `npm test` để chạy lại kiểm thử. D
 ## Nâng cấp trải nghiệm và motion
 
 Banner tràn viền hai bên, thêm countdown và dải nhận diện; nội dung quản lý vẫn có giới hạn chiều rộng để dễ đọc. Lộ trình bốn bước, header riêng cho từng trang, menu icon, bộ tìm trang nhanh và hệ thống motion dùng `public/ui.js`/`public/experience.css`. Chuyển động được giảm khi thiết bị bật Reduce Motion. Giữ nguyên nhận diện BMT, dữ liệu trống và luật thi đấu.
+
+## Tinh chỉnh theo phản hồi
+
+Ảnh VĐV nữ đổi thành quần thể thao xanh phủ gối; huy hiệu 15 năm dùng nền xanh đậm và số vàng lớn để tăng tương phản. Header dùng gradient trắng–xanh nhạt; giữ logo BMT nguyên bản và banner tràn viền. LIVE nhận tự động trận/số điểm đang nhập qua SSE, đồng thời giữ chế độ nhập tay.
