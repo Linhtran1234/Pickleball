@@ -1,4 +1,4 @@
-# Thiết kế theo nhận diện giải BMT Materials 2026
+# Thiết kế theo nhận diện giải BMT Material 2026
 
 ## Tài liệu đầu vào
 
@@ -32,3 +32,10 @@ Banner tràn viền hai bên, thêm countdown và dải nhận diện; nội dun
 ## Tinh chỉnh theo phản hồi
 
 Ảnh VĐV nữ giữ váy thể thao xanh, kéo dài hơn để che kín khi vận động; chữ 15 năm màu vàng được phóng lớn trên nền trong suốt, không dùng bảng nền xanh. Header dùng gradient trắng–xanh nhạt; giữ logo BMT nguyên bản và banner tràn viền. LIVE nhận tự động trận/số điểm đang nhập qua SSE, đồng thời giữ chế độ nhập tay.
+
+## Cập nhật thương hiệu và khu vực khán giả
+
+- Tên hiển thị thống nhất **BMT MATERIAL** trên header, banner, footer, hỗ trợ Admin và file Excel. Giữ nguyên logo gốc và khóa lưu trữ trình duyệt để bảo toàn phiên đăng nhập/dữ liệu hiện có. Tên giải cũ trong database được chuẩn hóa khi đọc/lưu, không reset giải.
+- Nâng cụm 15 năm trên desktop/tablet để dải băng không che mặt VĐV nam; chữ NĂM căn giữa dưới số. Thêm ánh vàng, điểm sáng và nhịp sáng nhẹ cho dải băng; tôn trọng tùy chọn giảm chuyển động.
+- LIVE có bảng bên phải với hai tab Đã kết thúc / Các đội. Kết quả lấy từ lịch đấu đã lưu tỷ số hợp lệ, giữ lịch sử khi sân chuyển trận. Danh sách đội hiển thị VĐV, bảng, level, số trận và thắng/thua. Điểm đang nhập chưa tính là kết quả chính thức. Trên màn hình nhỏ, bảng chuyển xuống dưới các sân.
+- Kiểm tra: 26 bài kiểm tra đạt; 40 tổ hợp tab/kích thước; dữ liệu giả lập chỉ trong trình duyệt với 30 đội và 7 kết quả chính thức, kiểm tra bố cục ở 6 chiều rộng và thao tác tab bằng bàn phím.

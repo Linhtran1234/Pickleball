@@ -1,8 +1,7 @@
 /* =========================================================================
    RENDER: LIVE MATCHES — bảng theo dõi trực tiếp 7 sân, phong cách eSports.
-   Dữ liệu (STATE.liveCourts) do Admin nhập tay riêng cho tab này (xem
-   defaultLiveCourt() trong app.js) — tách biệt khỏi lịch thi đấu tự sinh ở
-   tab "Thi đấu & Tỷ số" để BTC cập nhật nhanh trong lúc giải đang diễn ra.
+   Đồng bộ điểm đang nhập từ lịch thi đấu; hỗ trợ cập nhật sân thủ công.
+   Bảng bên phải hiển thị đội và kết quả chính thức đã lưu.
    ========================================================================= */
 
 // Ghi nhớ tỷ số lần render trước của từng sân để phát hiệu ứng "bump" đúng
@@ -101,6 +100,35 @@ function liveParticlesHtml(){
   return out;
 }
 
+// Keep the spectator's selection when live updates re-render the page.
+let LIVE_SIDEBAR_TAB = 'results';
+function selectLiveSidebar(tab){
+  LIVE_SIDEBAR_TAB = tab === 'teams' ? 'teams' : 'results';
+  render();
+  document.getElementById('live-sidebar-'+LIVE_SIDEBAR_TAB)?.focus({preventScroll:true});
+}
+function liveSidebarKey(event){
+  if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
+    event.preventDefault();
+    selectLiveSidebar(event.key==='Home'?'results':event.key==='End'?'teams':LIVE_SIDEBAR_TAB==='results'?'teams':'results');
+  }
+}
+function liveSidebarHtml(courts){
+  const teams = STATE.teams || [];
+  const completed = (STATE.matches || []).filter(m=>!m.empty && m.team1 && m.team2 && m.score1!=null && m.score2!=null && !Tournament.scoreError(m.score1,m.score2));
+  const teamById = new Map(teams.map(t=>[t.id,t]));
+  const name = t => t ? [t.p1?.name,t.p2?.name].filter(Boolean).join(' & ') || t.id : 'Đội chưa xác định';
+  const resultTeam = (t,score,winner) => `<div class="live-result-team ${winner?'is-winner':''}"><span>${escapeHtml(name(t))}</span><strong>${score}</strong></div>`;
+  const results = completed.slice().reverse().map(m=>`<article class="live-result-item"><div class="live-result-meta">${escapeHtml(liveCourtLabel(m.court))} · Level ${escapeHtml(m.level||'')}<span>Đã kết thúc</span></div>${resultTeam(teamById.get(m.team1),m.score1,m.score1>m.score2)}${resultTeam(teamById.get(m.team2),m.score2,m.score2>m.score1)}<small>${escapeHtml(m.time||'')}</small></article>`).join('');
+  const teamRows = teams.map(t=>{
+    const played = completed.filter(m=>m.team1===t.id || m.team2===t.id);
+    const wins = played.filter(m=>m.team1===t.id ? m.score1>m.score2 : m.score2>m.score1).length;
+    const active = courts.some(c=>c.status==='live' && c.matchId && (STATE.matches||[]).some(m=>m.id===c.matchId && (m.team1===t.id||m.team2===t.id)));
+    return `<article class="live-directory-team"><div><strong>${escapeHtml(name(t))}</strong><small>Bảng ${escapeHtml(t.group||'—')} · Level ${escapeHtml(t.level||'—')}</small></div>${active?'<span class="live-directory-active">Đang đấu</span>':''}<p>${played.length} trận đã đấu <span>· ${wins} thắng · ${played.length-wins} thua</span></p></article>`;
+  }).join('');
+  return `<aside class="live-sidebar" aria-label="Đội thi đấu và kết quả"><div class="live-sidebar-heading"><span>KHU VỰC KHÁN GIẢ</span><h3>Toàn cảnh giải đấu</h3></div><div class="live-sidebar-tabs" role="tablist" aria-label="Tra cứu giải đấu">${[['results','Đã kết thúc',completed.length],['teams','Các đội',teams.length]].map(([id,label,count])=>`<button id="live-sidebar-${id}" role="tab" aria-selected="${LIVE_SIDEBAR_TAB===id}" aria-controls="live-sidebar-panel" tabindex="${LIVE_SIDEBAR_TAB===id?0:-1}" onclick="selectLiveSidebar('${id}')" onkeydown="liveSidebarKey(event)">${label}<span>${count}</span></button>`).join('')}</div><div class="live-sidebar-panel" id="live-sidebar-panel" role="tabpanel" aria-labelledby="live-sidebar-${LIVE_SIDEBAR_TAB}" tabindex="0">${LIVE_SIDEBAR_TAB==='results'?(results||'<div class="live-sidebar-empty">Chưa có trận kết thúc.<small>Kết quả xuất hiện khi BTC lưu tỷ số hợp lệ.</small></div>'):(teamRows||'<div class="live-sidebar-empty">Chưa có đội thi đấu.<small>Các đội sẽ xuất hiện sau khi được đăng ký.</small></div>')}</div><p class="live-sidebar-note">Kết quả chính thức theo lịch đấu · Tự động cập nhật</p></aside>`;
+}
+
 RENDERERS.live = function(){
   const courts = Tournament.displayLiveCourts(STATE).sort((a,b)=>a.court-b.court);
   return `
@@ -115,9 +143,9 @@ RENDERERS.live = function(){
         <span class="live-clock" id="liveClockDisplay">--:--<span class="blink">:</span>--</span>
       </div>
     </div>
-    <div class="live-grid">
+    <div class="live-dashboard"><div class="live-grid">
       ${courts.map(liveCourtCardHtml).join('')}
-    </div>
+    </div>${liveSidebarHtml(courts)}</div>
   </div>`;
 };
 

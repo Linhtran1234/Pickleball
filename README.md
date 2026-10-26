@@ -1,4 +1,4 @@
-# BMT Materials Pickleball 2026 — GIẢI MỚI, DỮ LIỆU TRỐNG
+# BMT Material Pickleball 2026 — GIẢI MỚI, DỮ LIỆU TRỐNG
 
 Giao diện BMT tràn viền theo logo `docs/RENEW.pdf` và phong cách poster đã duyệt. Giữ logic giải 6 bảng A–F × 5 level A–E, dự kiến 30 cặp/60 VĐV, 7 sân; lịch vòng tròn 75 trận được tạo khi xếp đội. Ngày dự kiến 14/11/2026, 07:00–12:00, Pickleball Văn Thánh.
 
@@ -84,6 +84,8 @@ Namespace localStorage đã tách cho giải mới; khi mở bản mới, chỉ 
 Mở tab LIVE trên máy chiếu hoặc một trình duyệt khác. Khi BTC focus/nhập vào ô điểm của trận chưa kết thúc, sân tương ứng nhận đúng trận, tên bảng, logo và hai VĐV. Điểm dở dang như 3–3 hay 11–10 được hiển thị trực tiếp nhưng **không** trở thành kết quả chính thức. Lưu 11–9 hợp lệ sẽ chuyển Finished và cập nhật xếp hạng.
 
 Luồng realtime dùng Server-Sent Events (`/api/events`), có reconnect và polling dự phòng. Điểm phát được lưu riêng trong `live_scores`, không làm xung đột phiên bản dữ liệu của các Admin đang nhập ở sân khác. Bản nhập đến trễ không được ghi đè kết quả đã lưu. F5 vẫn lấy lại điểm đang phát để tiếp tục nhập.
+
+Bảng bên phải LIVE có hai mục **Đã kết thúc** và **Các đội**: xem kết quả chính thức theo lịch, VĐV, bảng/level và số trận thắng/thua của từng đội. Trên điện thoại, bảng nằm dưới các sân. Các trận đã lưu vẫn còn trong danh sách khi sân chuyển sang trận mới.
 
 **Nhập tay** lưu thông tin do BTC chọn và tắt liên kết của sân đó; một trận khác đang phát sẽ không bị xóa bởi yêu cầu chuyển chế độ đã cũ. Reset giải hoặc về lại giai đoạn xếp bảng sẽ xóa liên kết tự động; tài khoản vẫn được giữ nguyên. JSON import phục hồi dữ liệu thi đấu chính thức và LIVE nhập tay; luồng điểm dở dang sẽ được phát lại khi BTC tiếp tục nhập.
 

@@ -11,7 +11,7 @@ test('New tournament starts empty, ignores old browser cache, and renders 8 tabs
   const initial=w.eval('JSON.stringify(STATE)');
   for(const key of ['teams','waiting','matches']) assert.equal(w.eval(`STATE.${key}.length`),0);
   assert.equal(w.eval('STATE.tournamentStatus'),'setup');assert.equal(w.eval('rankGroups().length'),0);assert.equal(w.eval('CURRENT_USER'),null);assert.equal(w.localStorage.getItem('duhung-pickleball-2026-v1'),null);
-  assert.match(w.document.title,/BMT MATERIALS.*15 NĂM/);assert.equal(w.document.querySelector('.brand img').getAttribute('src'),'assets/bmt-logo.svg');
+  assert.match(w.document.title,/BMT MATERIAL.*15 NĂM/);assert.equal(w.document.querySelector('.brand img').getAttribute('src'),'assets/bmt-logo.svg');
   for(const role of ['user','admin']){
    w.eval(`CURRENT_USER={role:'${role}',displayName:'Test',local:true}`);
    for(const tab of ['overview','live','players','teams','board','matches','ranking','rules']){
@@ -74,4 +74,24 @@ test('LIVE quick-fill handles SQLite string courts, validates input and resets a
 
 test('Server login errors never grant local demo admin access over HTTP',async()=>{
  const app=await boot();try{const result=await app.w.attemptLogin('admin','admin123');assert.equal(result.ok,false);assert.equal(app.w.eval('CURRENT_USER'),null);}finally{app.close();}
+});
+
+test('LIVE sidebar keeps official history across court changes and preserves the selected directory',async()=>{
+ const state=fixture();state.tournamentStatus='started';
+ const first=state.matches.find(m=>!m.empty);first.score1=11;first.score2=9;first.status='done';
+ const next=state.matches.find(m=>!m.empty&&m.id!==first.id);next.score1=11;next.score2=10;
+ const app=await boot({state});const {w}=app;
+ try{
+  w.switchTab('live');
+  assert.equal(w.document.querySelectorAll('.live-result-item').length,1,'Only valid saved scores belong in official history');
+  assert.match(w.document.querySelector('.live-result-item').textContent,/11/);
+  w.selectLiveSidebar('teams');
+  assert.equal(w.document.querySelectorAll('.live-directory-team').length,state.teams.length);
+  assert.match(w.document.querySelector('.live-sidebar-panel').textContent,/1 trận đã đấu/);
+  w.render();assert.equal(w.document.querySelector('.live-sidebar [role=tab][aria-selected=true]').id,'live-sidebar-teams');
+  w.eval(`STATE.liveScores=[{court:${first.court},matchId:${JSON.stringify(next.id)},team1:${JSON.stringify(next.team1)},team2:${JSON.stringify(next.team2)},scoreA:2,scoreB:1,status:'live'}]`);
+  w.selectLiveSidebar('results');assert.equal(w.document.querySelectorAll('.live-result-item').length,1,'A new live draft never replaces completed history');
+  w.liveSidebarKey({key:'ArrowRight',preventDefault(){}});assert.equal(w.document.activeElement.id,'live-sidebar-teams');
+  assert.deepEqual(app.errors,[]);
+ }finally{app.close();}
 });

@@ -1,7 +1,7 @@
 {
-  "name": "bmt-materials-pickleball-2026",
+  "name": "bmt-material-pickleball-2026",
   "version": "1.0.0",
-  "description": "BMT Materials Pickleball 2026 \u2014 fresh tournament manager (Express + SQLite)",
+  "description": "BMT Material Pickleball 2026 \u2014 fresh tournament manager (Express + SQLite)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

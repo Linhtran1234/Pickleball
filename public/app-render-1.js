@@ -23,18 +23,18 @@ RENDERERS.overview = function(){
   const currentStep=journey.findIndex(step=>!step.done);
 
   return `
-  <section class="hero-banner event-hero" aria-label="BMT Materials Pickleball 2026">
+  <section class="hero-banner event-hero" aria-label="BMT Material Pickleball 2026">
     <div class="event-masthead">
       <div class="event-organizer">
-        <img class="event-logo" src="assets/bmt-logo.svg" alt="BMT Materials">
-        <span>MATERIALS<span class="organizer-caption">ĐƠN VỊ TỔ CHỨC</span></span>
+        <img class="event-logo" src="assets/bmt-logo.svg" alt="BMT Material">
+        <span>MATERIAL<span class="organizer-caption">ĐƠN VỊ TỔ CHỨC</span></span>
       </div>
       <span class="event-edition">KẾT NỐI ĐAM MÊ · BỨT PHÁ GIỚI HẠN</span>
     </div>
     <div class="event-stage">
       <div class="event-copy">
         <p class="event-eyebrow"><span></span> CHÀO MỪNG BẠN ĐẾN VỚI GIẢI ĐẤU</p>
-        <h1 class="event-title"><span class="event-brand">BMT MATERIALS</span><span class="event-sport">PICKLEBALL</span><span class="event-year">2026<span class="event-year-line"></span></span></h1>
+        <h1 class="event-title"><span class="event-brand">BMT MATERIAL</span><span class="event-sport">PICKLEBALL</span><span class="event-year">2026<span class="event-year-line"></span></span></h1>
         <p class="event-tagline">Cùng ra sân. Cùng tỏa sáng.</p>
         <p class="event-description">Một sân chơi, chung tinh thần đồng đội.<br>Dự kiến 30 cặp đấu · 6 bảng · 5 cấp độ · 7 sân thi đấu</p>
         <div class="event-cta">
@@ -55,7 +55,7 @@ RENDERERS.overview = function(){
       <div class="event-info-item"><span class="event-info-icon" aria-hidden="true">♧</span><div><span class="event-info-label">TINH THẦN GIẢI ĐẤU</span><strong>Đoàn kết · Fair Play</strong><span class="event-info-detail">KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY</span></div></div>
     </div>
   </section>
-  <div class="ux-event-ticker" aria-hidden="true"><div class="ux-ticker-track">${[0,1].map(()=>`<span>BMT MATERIALS ${AppUX.icon('spark')} ĐOÀN KẾT ${AppUX.icon('spark')} FAIR PLAY ${AppUX.icon('spark')} BỨT PHÁ GIỚI HẠN ${AppUX.icon('spark')} 15 NĂM VỮNG BỀN ${AppUX.icon('spark')} PICKLEBALL 2026 ${AppUX.icon('spark')}</span>`).join('')}</div></div>
+  <div class="ux-event-ticker" aria-hidden="true"><div class="ux-ticker-track">${[0,1].map(()=>`<span>BMT MATERIAL ${AppUX.icon('spark')} ĐOÀN KẾT ${AppUX.icon('spark')} FAIR PLAY ${AppUX.icon('spark')} BỨT PHÁ GIỚI HẠN ${AppUX.icon('spark')} 15 NĂM VỮNG BỀN ${AppUX.icon('spark')} PICKLEBALL 2026 ${AppUX.icon('spark')}</span>`).join('')}</div></div>
   <div class="overview-content">
     <section class="ux-journey" aria-label="Hành trình giải đấu">
       <div class="ux-journey-intro"><p class="ux-eyebrow" id="uxRoleLabel">NGÀY HỘI THỂ THAO</p><h2>Mỗi bước tiến.<br><em>Một kết nối mới.</em></h2><span class="ux-journey-note">${isAdmin()?'Cùng chuẩn bị một giải đấu thật đáng nhớ.':'Cùng theo dõi hành trình chinh phục sân đấu.'}</span></div>

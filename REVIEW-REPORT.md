@@ -32,7 +32,7 @@
 
 ## Kiểm tra đã chạy
 
-- `npm test`: **25 test đạt, 0 thất bại/skip**. Bao gồm khởi tạo trống, cache cũ, 8 tab × 2 quyền, đăng ký/ghép/chia bảng/start, nhiều ca tỷ số, giữ bản nháp, LIVE, API quyền, đổi quyền/mật khẩu, nhập sai, lưu đồng thời/lỗi/retry reset giữ nguyên tài khoản, khôi phục Admin, điều hướng nhanh, focus bàn phím và thông báo an toàn.
+- `npm test`: **26 test đạt, 0 thất bại/skip**. Bao gồm khởi tạo trống, cache cũ, 8 tab × 2 quyền, đăng ký/ghép/chia bảng/start, nhiều ca tỷ số, giữ bản nháp, LIVE, API quyền, đổi quyền/mật khẩu, nhập sai, lưu đồng thời/lỗi/retry reset giữ nguyên tài khoản, khôi phục Admin, điều hướng nhanh, focus bàn phím và thông báo an toàn.
 - Chromium thật: 8 tab trống ở 390/768/1440px; đăng ký VĐV qua modal, auto-pair, chọn bảng, nhập JSON giả, start, nhập điểm và reload, lấy trận LIVE từ dữ liệu SQLite, tải JSON/Excel và xung đột 409 giữa hai Admin. Reset cuối kiểm tra và reload xác nhận trống.
 - File Excel kiểm tra đủ 6 cột bảng; lịch đủ 75 trận và 7 sheet trên fixture giả.
 - `npm audit`: **0 cảnh báo được báo cáo** tại thời điểm kiểm tra. Đây là kết quả audit dependency, không phải cam kết không có mọi lỗ hổng.
@@ -66,3 +66,7 @@ Kiểm tra bổ sung trên Chromium thật: 40 tổ hợp 8 tab × 5 chiều r�
 - Khi lưu xong, bản broadcast cũ không làm các ô nhập quay về số trước đó. Nhập lại/F5 tiếp tục từ bản LIVE còn dở dang.
 - Bảy test bổ sung bao phủ API quyền/validation, sân độc lập, điểm chính thức vs bản nháp, bản nhập đến trễ, chuyển nhập tay, SSE/reset và hồi quy ô nhập.
 - Chromium: hai context đăng nhập/xem độc lập, **tắt polling của màn hình xem** để xác nhận SSE thực sự cập nhật. Kiểm tra đúng tên VĐV/đội, hai sân, 11–10 bị từ chối khi lưu, 11–9 Finished, reload, nhập tay rồi tự nối lại và reset giữ Admin.
+
+## Bổ sung bảng khán giả LIVE
+
+26 test đạt, 0 thất bại. Kiểm tra thêm lịch sử kết quả chính thức độc lập với trận đang phát trên sân, danh sách 30 đội, giữ lựa chọn tab khi đồng bộ và bàn phím trái/phải. Chromium xác nhận bảng nằm bên phải ở desktop và chuyển xuống dưới trên mobile tại 6 chiều rộng; dữ liệu giả lập chỉ trong trình duyệt. Đổi tên hiển thị thành BMT MATERIAL, nâng chữ kỷ niệm, căn lại NĂM và thêm hiệu ứng ánh vàng/điểm sáng có hỗ trợ giảm chuyển động.

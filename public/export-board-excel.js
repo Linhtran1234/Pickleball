@@ -60,7 +60,7 @@ async function exportBoardToExcel(){
   }
   try{
     const wb = new ExcelJS.Workbook();
-    wb.creator = 'BMT MATERIALS PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY';
+    wb.creator = 'BMT MATERIAL PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY';
     wb.created = new Date();
     const ws = wb.addWorksheet('Chia bảng', {
       pageSetup: { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
@@ -72,7 +72,7 @@ async function exportBoardToExcel(){
     // ---- Tiêu đề ----
     ws.mergeCells(1, 1, 1, nCols);
     const titleCell = ws.getCell(1, 1);
-    titleCell.value = 'BMT MATERIALS PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY — CHIA BẢNG ĐẤU';
+    titleCell.value = 'BMT MATERIAL PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY — CHIA BẢNG ĐẤU';
     titleCell.font = { name: 'Arial', size: 16, bold: true, color: { argb: 'FF1F3864' } };
     titleCell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
     ws.getRow(1).height = 48;

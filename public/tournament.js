@@ -1,7 +1,7 @@
 /* Shared tournament configuration and validation. No participant/sample data. */
 (function(root){
   'use strict';
-  const EVENT_NAME = 'BMT MATERIALS PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY';
+  const EVENT_NAME = 'BMT MATERIAL PICKLEBALL 2026 - KỶ NIỆM 15 NĂM THÀNH LẬP CÔNG TY';
   const LEVELS = ['A','B','C','D','E'];
   const GROUPS = ['A','B','C','D','E','F'];
   const STORAGE_PREFIX = 'bmt-materials-2026-new-v2';
