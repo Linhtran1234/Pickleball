@@ -1,0 +1,23 @@
+{
+  "name": "bmt-materials-pickleball-2026",
+  "version": "1.0.0",
+  "description": "BMT Materials Pickleball 2026 \u2014 fresh tournament manager (Express + SQLite)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "test": "node --test --test-concurrency=1 tests/*.test.cjs",
+    "reset": "node reset-tournament.js",
+    "admin:recover": "node recover-admin.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  },
+  "engines": {
+    "node": ">=22 <25"
+  }
+}
